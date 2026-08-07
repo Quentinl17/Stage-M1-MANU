@@ -1,0 +1,784 @@
+% ===========================================
+\section{Résolution avec les semi-groupes}
+% ===========================================
+L'objectif de cette section est de résoudre le modèle \eqref{modele_McKendrick_Lotka} en utilisant la théorie des semi-groupes. Pour ça, on utilise les résultats de \cite{Pazy1983} que l'on rappelle en Annexe \ref{annexe_SG}.
+
+\subsection{Cadre théorique et problème de Cauchy}
+Comme dans \cite[p.~100]{Pazy1983}, on va dans un premier temps chercher à reformuler le modèle \eqref{modele_McKendrick_Lotka} comme un problème de Cauchy. 
+\\
+Notre inconnue $x$ dépend à la fois du temps et de \og l'espace \fg{} (âge), pour se ramener à un problème de Cauchy on doit donc gérer la dépendance en temps de manière différente. Pour ça, on va \og regarder \fg{} notre inconnue $[0,a_{\max}] \times \bbR_+ \ni (a,t) \mapsto x(a,t) \in \bbR_+$ comme une fonction $\bbR_+ \ni t \mapsto \tilde{x}(t)$ à valeurs dans un espace vectoriel de fonctions définies sur $\bbR_+$, c'est-à-dire $[0,a_{\max}] \ni a \mapsto \tilde{x}(t)(a) \in \bbR_+$.
+\\
+Comme on veut pouvoir calculer la moyenne de la densité de population à tout instant $t \in \bbR_+$, il nous faut au moins $L^1$ pour cadre général. Nous verrons plus tard s'il est possible d'affiner ce cadre théorique.
+\\
+On considère donc $x : \bbR_+ \rightarrow L^1(0,a_{\max}), \ t \mapsto x(t)$. Et on considère une donnée initiale $x_0 \in L^1(0,a_{\max})$. On peut réécrire \eqref{eq_McKendrick_Lotka}
+\begin{equation*}
+    \frac{\d}{\d t}x(t) = \big(\underbrace{-\mu - \partial_a}_{=:A}\big) x(t)
+\end{equation*}
+On obtient alors le problème de Cauchy
+\begin{equation}\label{pbmCauchy_SG}
+    \left\{\begin{array}{lr}
+        \dfrac{\d}{\d t}x(t) = Ax(t) & \ \ \ t >0 \\
+        & \\
+        x(0) = x_0 &
+    \end{array}\right.
+\end{equation}
+On doit à présent déterminer le domaine de définition de $A$. Il nous faut intégrer la condition au bord du modèle \eqref{modele_McKendrick_Lotka} dans le domaine de définition de $A$. Pour ça on pose
+\begin{equation*}
+    D(A) := \Big\{ u \in L^{1}(0,a_{\max}) \ \ | \ \ u'+\mu u \in L^1(0,a_{\max}) \ \text{ et } \ u(0) = \int_0^{+\infty}\beta(a)u(a)\d a \Big\}
+\end{equation*}
+
+\begin{proposition}\label{prop_injec_DA_W}
+    On a 
+    \begin{equation*}
+        D(A) \subset W^{1,1}(0,a_{\max}) \subset L^1(0,a_{\max})
+    \end{equation*}
+    avec injection continue de $\big(D(A),\|\cdot\|_A\big)$ dans $W^{1,1}(0,a_{\max})$.
+\end{proposition}
+
+\begin{proof}
+    Soit $u \in D(A)$ alors on pose $f=u'+\mu u$ et on obtient l'EDO 
+    \begin{equation*}
+        u' = f-\mu u 
+    \end{equation*}
+    dont la solution est donnée par 
+    \begin{equation*}
+        u(a) = u(0)\Pi(a) + \int_0^a \frac{\Pi(a)}{\Pi(s)}f(s)\d s
+    \end{equation*}
+    et donc 
+    \begin{equation*}
+        u'(a) = -u(0)\mu(a)\Pi(a) - \mu(a)\int_0^a \frac{\Pi(a)}{\Pi(s)}f(s) \d s + f(a)
+    \end{equation*}
+    donc 
+    \begin{eqnarray*}
+        \|u'\|_{L^1} &\leq& |u(0)|\int_0^{a_{\max}} \mu(a)\Pi(a)\d a + \int_0^{a_{\max}} \mu(a)\Pi(a)\int_0^a \frac{|f(s)|}{\Pi(s)}\d s + \|f\|_{L^1} \\
+        &\overset{\text{Fubini}}{=}& |u(0)|\big(\Pi(0)-\Pi(a_{\max})\big) + \int_0^{a_{\max}} \frac{|f(s)|}{\Pi(s)}\int_s^{a_{\max}} \mu(a)\Pi(a)\d a\d s +\|f\|_{L^1} \\
+        &\leq& \|\beta\|_{L^\infty}\|u\|_{L^1} + \int_0^{a_{\max}}\frac{|f(s)|}{\Pi(s)}\big(\Pi(s)-\Pi(a_{\max})\big)\d s +\|f\|_{L^1} \\
+        &=& \|\beta\|_{L^\infty}\|u\|_{L^1}+2\|f\|_{L^1}<+\infty
+    \end{eqnarray*}
+    d'où les inclusions. De plus, si on munit $D(A)$ de la norme du graphe $\|\cdot\|_A$ définie par 
+    \begin{equation*}
+        \forall u \in D(A), \ \|u\|_A := \|u\|_{L^1} + \|Au\|_{L^1}
+    \end{equation*}
+    alors on a 
+    \begin{equation}\label{norme_W_DA}
+        \|u\|_{W^{1,1}} \leq \big(\|\beta\|_{L^\infty}+3\big)\|u\|_A
+    \end{equation}
+    ce qui nous permet de conclure que l'injection $\big(D(A),\|\cdot\|_A\big) \hookrightarrow \big(W^{1,1}(0,a_{\max}),\|\cdot\|_{W^{1,1}}\big)$ est continue.
+\end{proof}
+
+\begin{proposition}\label{def_dA_bis}
+    On a aussi 
+    \begin{equation*}
+        D(A) = \Big\{ u \in W^{1,1}(0,a_{\max}) \ \ | \ \ \mu u \in L^1(0,a_{\max}) \ \text{ et } \ u(0) = \int_0^{+\infty}\beta(a)u(a)\d a \Big\}
+    \end{equation*}
+\end{proposition}
+
+\begin{proof}
+    $\boxed{\subset}$ Soit $u \in D(A)$. Alors $u \in W^{1,1}(0,a_{\max})$ par la proposition précédente et la condition au bord est trivialement vérifiée. Si on pose $f:=u'+\mu u$ alors on a 
+    \begin{equation*}
+        \|\mu u \|_{L^1} = \|f-u'\|_{L^1} \leq \|f\|_{L^1}+\|u'\|_{L^1} <+\infty
+    \end{equation*}
+    d'où l'inclusion.
+    \\
+    $\boxed{\supset}$ Soit $u \in \Big\{ u \in W^{1,1}(0,a_{\max}) \ \ | \ \ \mu u \in L^1(0,a_{\max}) \ \text{ et } \ u(0) = \int_0^{+\infty}\beta(a)u(a)\d a \Big\}$. La condition au bord est à nouveau vérifiée et comme $W^{1,1} \subset L^1$, $u \in L^1(0,a_{\max})$. Et enfin, 
+    \begin{equation*}
+        \|u'+\mu u\|_{L^1} \leq \|u'\|_{L^1}+\|\mu u \|_{L^1} <+\infty
+    \end{equation*}
+    d'où l'inclusion, et l'égalité.
+\end{proof}
+
+\subsection{Application du théorème de Hille-Yosida}
+Comme suggéré dans \cite[p.~100]{Pazy1983}, si on montre que $A$ est le générateur infinitésimal d'un $\scrC^0$ semi-groupe alors on aura existence et unicité d'une solution au problème \eqref{pbmCauchy_SG}. On va donc montrer que $A$ est le générateur infinitésimal d'un $\scrC^0$ semi-groupe, et pour cela, on va chercher à appliquer le théorème de Hille-Yosida, plus précisément le corollaire \ref{cor_HY}. Pour cela, il nous faut vérifier plusieurs conditions.
+
+\begin{proposition}
+    $A : D(A) \rightarrow L^1(0,a_{\max})$ est un opérateur fermé.
+\end{proposition}
+
+\begin{proof}
+    Soit $(x_n)_{n \in \bbN} \subset D(A)$ telle que $x_n \overset{L^1}{\underset{n \to +\infty}{\longrightarrow}} x$ et $Ax_n \overset{L^1}{\underset{n \to +\infty}{\longrightarrow}} y$. Comme $(x_n)_{n \in \bbN} \subset D(A)$, on a 
+    \begin{equation*}
+        \forall n \in \bbN, \ x_n(0)=\int_0^{a_{\max}}\beta(a)x_n(a)\d a
+    \end{equation*}
+    Ainsi
+    \begin{eqnarray*}
+        \bigg|x_n(0) - \int_0^{a_{\max}} \beta(a)x(a)\d a\bigg| \leq \int_0^{a_{\max}} \beta(a)\big|x_n(a)-x(a)\big|\d a
+        \leq \|\beta\|_{L^{\infty}}\|x_n-x\|_{L^1}\underset{n \to +\infty}{\longrightarrow} 0
+    \end{eqnarray*}
+    La suite $(x_n(0))_{n \in \bbN}$ converge dans $\bbR$ et on a 
+    \begin{equation*}
+        x^*:=\lim_{n \to +\infty} x_n(0) = \int_0^{a_{\max}} \beta(a)x(a)\d a
+    \end{equation*}
+    Ensuite, on a par définition de $A$
+    \begin{equation*}
+        \forall n \in \bbN, \ Ax_n = -\mu x_n - x_n'
+    \end{equation*}
+    donc
+    \begin{equation*}
+        \forall n \in \bbN, \ x_n' = -\mu x_n -Ax_n
+    \end{equation*}
+    On retrouve alors une EDO, la solution de cette EDO est donnée par le formule de Duhamel 
+    \begin{eqnarray*}
+        \forall n \in \bbN, \ x_n(a) &=& x_n(0)\exp\bigg(-\int_0^a \mu(\sigma)\d \sigma\bigg) - \int_0^a \exp\bigg(-\int_{\sigma}^a \mu(s)\d s\bigg)\big(Ax_n\big)(\sigma)\d \sigma \\
+        &=& x_n(0)\Pi(a) - \int_0^a\big(Ax_n\big)(\sigma)\frac{\Pi(a)}{\Pi(\sigma)}\d \sigma
+    \end{eqnarray*}
+    Posons pour presque tout $a \in [0,a_{\max}]$
+    \begin{equation*}
+        z(a):= x^*\Pi(a) - \int_0^ay(\sigma)\frac{\Pi(a)}{\Pi(\sigma)}\d \sigma
+    \end{equation*}
+    Alors 
+    \begin{eqnarray*}
+        \|x_n-z\|_{L^1} &=& \int_0^{a_{\max}}|x_n(a)-z(a)|\d a \\
+        &\leq& \int_0^{a_{\max}} \Pi(a)|x_n(0)-x^*|\d a +\int_0^{a_{\max}} \int_0^a \frac{\Pi(a)}{\Pi(\sigma)}\big|\big(Ax_n\big)(\sigma) - y(\sigma)\big|\d \sigma \d a \\
+        &\leq& \int_0^{a_{\max}} |x_n(0)-x^*|\d a +\int_0^{a_{\max}} \int_0^{a_{\max}} \big|\big(Ax_n\big)(\sigma) - y(\sigma)\big|\d \sigma \d a \\
+        &\leq& a_{\max} |x_n(0)-x^*| + a_{\max} \|Ax_n-y\|_{L^1}\underset{n \to +\infty}{\longrightarrow} 0
+    \end{eqnarray*}
+    Par unicité de la limite dans $L^1$, on obtient $x=z$ dans $L^1$, autrement dit pour presque tout $a \in [0,a_{\max}]$
+    \begin{equation*}
+        x(a) = x^*\Pi(a) - \int_0^a \frac{\Pi(a)}{\Pi(\sigma)}y(\sigma)\d \sigma
+    \end{equation*}
+    et on a bien 
+    \begin{equation*}
+        x(0) = x^* = \int_0^{a_{\max}} \beta(a)x(a)\d a
+    \end{equation*}
+    De plus, $x$ est dérivable et on a pour presque tout $a \in [0,a_{\max}]$
+    \begin{eqnarray*}
+        Ax(a) &=& -\mu(a)x(a) - x'(a) \\
+        &=& -\mu(a)x(0)\Pi(a) + \mu(a)\int_0^a \frac{\Pi(a)}{\Pi(\sigma)} y(\sigma)\d \sigma \\
+        &-& \bigg(-x(0)\mu(a)\Pi(a)+ \mu(a)\Pi(a)\int_0^a \frac{y(\sigma)}{\Pi(\sigma)}\d \sigma - y(a)\bigg) \\
+        &=& y(a)
+    \end{eqnarray*}
+    donc $Ax=y$ dans $L^1$. Enfin, on vérifie que $x' \in L^1(0,a_{\max})$
+    \begin{eqnarray*}
+        \|x'\|_{L^1} &\leq& |x(0)|\int_0^{a_{\max}}\mu(a)\Pi(a)\d a + \int_0^{a_{\max}} \mu(a)\Pi(a) \int_0^a \frac{|y(\sigma)|}{\Pi(\sigma)}\d \sigma \d a + \|y\|_{L^1} \\
+        &\leq& \|\beta\|_{L^\infty} \|x\|_{L^1}\big(\Pi(0)-\Pi(a_{\max})\big)+\|y\|_{L^1}+ \int_0^{a_{\max}} \mu(a)\Pi(a) \int_0^a \frac{|y(\sigma)|}{\Pi(\sigma)}\d \sigma \d a \\ 
+        &\overset{\text{Fubini}}{\leq}& \|\beta\|_{L^\infty}\|x\|_{L^1}+\|y\|_{L^1} + \int_0^{a_{\max}}\frac{|y(\sigma)|}{\Pi(\sigma)} \int_{\sigma}^{a_{\max}} \mu(a)\Pi(a)\d a \d \sigma \\ 
+        &=& \|\beta\|_{L^\infty}\|x\|_{L^1}+\|y\|_{L^1} + \int_0^{a_{\max}}\frac{|y(\sigma)|}{\Pi(\sigma)} \big(\Pi(\sigma)-\Pi(a_{\max})\big)\d \sigma \\
+        &=& \|\beta\|_{L^\infty} \|x\|_{L^1} + 2 \|y\|_{L^1} <+\infty
+    \end{eqnarray*}
+    Finalement, on a bien montré que $x \in D(A)$ et que $Ax=y$. Donc $A$ est bien un opérateur fermé.
+\end{proof}
+
+\begin{proposition}
+    $D(A)$ est dense dans $L^1(0,a_{\max})$.
+\end{proposition}
+
+\begin{proof}
+    On utilisera la définition de $D(A)$ de la proposition \ref{def_dA_bis}. Tout d'abord, on a les inclusions 
+    \begin{equation*}
+        \calD(0,a_{\max}) \subset \big\{ u \in W^{1,1}(0,a_{\max}) \ | \ \mu u \in L^1(0,a_{\max})\big\} \subset L^1(0,a_{\max})
+    \end{equation*}
+    et comme $\overline{\calD(0,a_{\max})}^{L^1} = L^1(0,a_{\max})$, on a en passant à l'adhérence dans $L^1$
+    \begin{equation*}
+        \overline{\big\{ u \in W^{1,1}(0,a_{\max}) \ | \ \mu u \in L^1(0,a_{\max})\big\}}^{L^1} = L^1(0,a_{\max})
+    \end{equation*}
+    Soit $f \in L^1(0,a_{\max})$ et soit $\varepsilon >0$. Par densité, il existe $u \in \big\{ u \in W^{1,1}(0,a_{\max}) \ | \ \mu u \in L^1(0,a_{\max})\big\}$ tel que 
+    \begin{equation*}
+        \|f-u\|_{L^1} < \varepsilon
+    \end{equation*}
+    On pose $v_{\varepsilon} = u+\lambda_{\varepsilon} \varphi_{\varepsilon}$ dans le but de \og corriger \fg{} l'élément $u$ afin de prendre en compte la condition au bord. On veut donc que $(v_{\varepsilon})_{\varepsilon >0} \subset D(A)$. Pour ça, $v_{\varepsilon}$ doit vérifier la condition au bord pour tout $\varepsilon >0$, \textit{i.e.} on veut 
+    \begin{equation}\label{eq_lambda_eps1}
+        v_{\varepsilon}(0) = \int_0^{a_{\max}} \beta(a)v_{\varepsilon}(a)\d a = \int_0^{a_{\max}}\beta(a)u(a)\d a + \lambda_{\varepsilon}\int_0^{a_{\max}} \beta(a)\varphi_{\varepsilon}(a)\d a
+    \end{equation}
+    et on a 
+    \begin{equation}\label{eq_lambda_eps2}
+        v_{\varepsilon}(0) = u(0)+\lambda_{\varepsilon}\varphi_{\varepsilon}(0)
+    \end{equation}
+    en substituant \eqref{eq_lambda_eps1} dans \eqref{eq_lambda_eps2} on obtient
+    \begin{equation*}
+        \lambda_{\varepsilon} = \frac{\displaystyle{\int_0^{a_{\max}}} \beta(a)u(a)\d a - u(0)}{\varphi_{\varepsilon}(0)-\displaystyle{\int_0^{a_{\max}}} \beta(a)\varphi_{\varepsilon}(a)\d a}
+    \end{equation*}
+    ce qui permet de vérifier la condition au bord. Pour que $(v_{\varepsilon})_{\varepsilon >0} \subset D(A)$, on doit en particulier avoir $(v_{\varepsilon})_{\varepsilon >0} \subset W^{1,1}(0,a_{\max})$, donc on veut $(\varphi_{\varepsilon})_{\varepsilon >0} \subset W^{1,1}(0,a_{\max})$. De plus, il nous faut choisir $(\varphi_{\varepsilon})_{\varepsilon >0}$ de sorte que $(\lambda_{\varepsilon})_{\varepsilon >0}$ soit bornée en $\varepsilon$ et $\|\varphi_{\varepsilon}\|_{L^1}$ tend vers $0$ lorsque $\varepsilon$ tend vers $0$. On définit alors 
+    \begin{equation*}
+        \varphi_{\varepsilon}(a) = \left\{\begin{array}{cl}
+            1 & \text{ si } a \in [0,\varepsilon/2], \\
+            \dfrac{2}{\varepsilon}(\varepsilon-a) & \text{ si } a \in [\varepsilon/2, \varepsilon], \\
+            0 & \text{ sinon.}
+        \end{array}\right.
+    \end{equation*}
+    On a $\varphi_{\varepsilon}(0)=1$ et
+    \begin{eqnarray*}
+        \|\varphi_{\varepsilon}\|_{L^1} &=& \int_0^{\varepsilon/2}1\d a + \frac{2}{\varepsilon}\int_{\varepsilon/2}^{\varepsilon}(\varepsilon-a)\d a \\
+        &=& \frac{\varepsilon}{2} + \varepsilon - \frac{2}{\varepsilon}\bigg[\frac{a^2}{2}\bigg]^{\varepsilon}_{\varepsilon/2} \\
+        &=& \frac{3}{4}\varepsilon
+    \end{eqnarray*}
+    Donc 
+    \begin{equation*}
+        -\frac{3}{4}\|\beta\|_{L^\infty}\varepsilon \leq - \int_0^{a_{\max}} \beta(a) \varphi_{\varepsilon}(a)\d a
+    \end{equation*}
+    donc pour $\varepsilon$ petit, le dénominateur de $\lambda_{\varepsilon}$ est borné en $\varepsilon$. Ainsi, la suite $(\lambda_{\varepsilon})_{\varepsilon}$ est borné en $\varepsilon$. On vérifie que $(\varphi_{\varepsilon})_{\varepsilon >0} \subset W^{1,1}(0,a_{\max})$, soit $\psi \in \calD(0,a_{\max})$
+    \begin{eqnarray*}
+        \langle \varphi_{\varepsilon}', \psi\rangle &=& -\langle \varphi_{\varepsilon}, \psi'\rangle \\
+        &=& - \int_0^{\varepsilon/2}\psi'(a)\d a - 2\int_{\varepsilon/2}^{\varepsilon}\psi'(a)\d a + \frac{2}{\varepsilon} \int_{\varepsilon/2}^{\varepsilon} a \psi'(a)\d a \\
+        &=& \psi(0)-\psi(\varepsilon/2)-2\psi(\varepsilon)+2\psi(\varepsilon/2) + \frac{2}{\varepsilon}\bigg(\big[a\psi(a)\big]_{\varepsilon/2}^{\varepsilon}-\int_{\varepsilon/2}^{\varepsilon}\psi(a)\d a \bigg) \\
+        &=& - 2 \psi(\varepsilon)+\psi(\varepsilon/2)+\frac{2}{\varepsilon}\bigg(\varepsilon \psi(\varepsilon)-\frac{\varepsilon}{2}\psi(\varepsilon/2) - \int_{\varepsilon/2}^{\varepsilon}\psi(a)\d a\bigg) \\
+        &=& -\frac{2}{\varepsilon}\int_{\varepsilon/2}^{\varepsilon}\psi(a)\d a = \Big\langle - \frac{2}{\varepsilon} \mathds{1}_{[\varepsilon/2,\varepsilon]}, \psi \Big\rangle
+    \end{eqnarray*}
+    Et enfin, on a 
+    \begin{equation*}
+        \mu v_{\varepsilon} = \mu u + \lambda_{\varepsilon}\mu \varphi_{\varepsilon}
+    \end{equation*}
+    comme $u \in \big\{ u \in W^{1,1}(0,a_{\max}) \ | \ \mu u \in L^1(0,a_{\max})\big\}$, on a bien $\mu u \in L^1(0,a_{\max})$ et $\varphi_{\varepsilon}$ étant à support compact, on a bien $\mu \varphi_{\varepsilon} \in L^1(0,a_{\max})$. Ainsi, $(v_{\varepsilon})_{\varepsilon >0} \subset D(A)$ et on a 
+    \begin{eqnarray*}
+        \|f-v_{\varepsilon}\|_{L^1} &\leq& \|f-u\|_{L^1} + \|u-v_{\varepsilon}\|_{L^1} \\
+        &=& \|f-u\|_{L^1} + |\lambda_{\varepsilon}|\|\varphi_{\varepsilon}\|_{L^1} \\
+        &<& \varepsilon + \frac{3}{4}C \varepsilon = \Big(1+\frac{3}{4}C\Big)\varepsilon
+    \end{eqnarray*}
+    ceci étant valable pour tout $\varepsilon >0$, on peut faire tendre $\varepsilon$ vers $0$ et on obtient le résultat.
+\end{proof}
+
+\begin{proposition}
+    On a $]\|\beta\|_{L^{\infty}},+\infty[ \ \subset \rho(A)$ et pour chaque $\lambda$ dans cet ensemble la résolvante de $A$ vérifie
+    \begin{equation*}
+        \vertiii{R(\lambda : A)}_{L^1} \leq \frac{1}{\lambda - \|\beta\|_{L^\infty}}
+    \end{equation*}
+    où $\vertiii{\cdot}_{L^1}$ désigne la norme d'opérateur de $L^1$.
+\end{proposition}
+
+\begin{proof}
+    On cherche les $\lambda \in \bbC$ tels que $\lambda I- A$ est inversible. Soient $f \in D(A)$ et $g \in L^1(0,a_{\max})$ tels que 
+    \begin{equation*}
+        (\lambda I - A)^{-1}g=f
+    \end{equation*}
+    alors 
+    \begin{equation*}
+        g = (\lambda I - A)f \iff g = \lambda f + \mu f + f'
+    \end{equation*}
+    donc pour $a \in \ ]0,a_{\max}[$
+    \begin{equation*}
+        f'(a) = -\big(\lambda +\mu(a)\big)f(a)+g(a)
+    \end{equation*}
+    La solution de cet EDO est donnée par 
+    \begin{eqnarray*}
+        f(a) &=& \exp\bigg(-\lambda a - \int_0^a\mu(\sigma)\d \sigma\bigg)f(0)+\int_0^a \exp\bigg(-\lambda(a-s)-\int_s^a \mu(\sigma)\d \sigma\bigg)g(s)\d s \\
+        &=& \ex^{-\lambda a}\exp\bigg(\int_0^a \mu(\sigma)\d \sigma\bigg)f(0) + \int_0^a \ex^{-\lambda(a-s)}\exp\bigg(-\int_s^a\mu(\sigma)\d \sigma\bigg)g(s)\d s \\
+        &=& \ex^{-\lambda a}\Pi(a)\bigg(f(0)+\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}g(s)\d s \bigg)
+    \end{eqnarray*}
+    Comme $f \in D(A)$, on a 
+    \begin{eqnarray*}
+        f(0) &=& \int_0^{a_{\max}}\beta(a)f(a)\d a \\
+        &=& \int_0^{a_{\max}} \beta(a) \ex^{-\lambda a}\Pi(a)\bigg(f(0)+\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}g(s)\d s \bigg)\d a \\
+        &=& f(0)\int_0^{a_{\max}}\ex^{-\lambda a}K(a)\d a + \int_0^{a_{\max}} \ex^{-\lambda a}K(a)\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}g(s)\d s\d a
+    \end{eqnarray*}
+    Donc on a 
+    \begin{equation*}
+        f(0)\bigg(1-\int_0^{a_{\max}}\ex^{-\lambda a}K(a)\d a\bigg) = \int_0^{a_{\max}} \ex^{-\lambda a}K(a)\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}g(s)\d s\d a
+    \end{equation*}
+    Cette équation admet une unique solution si et seulement si 
+    \begin{eqnarray*}
+        1-\int_0^{a_{\max}}\ex^{-\lambda a}K(a)\d a \neq 0 &\iff& \hat{K}(\lambda) \neq 1
+    \end{eqnarray*}
+    %On a déjà résolu l'équation $\hat{K}(\lambda)=1$ dans $\bbC$. On a une seule solution dans $\bbR$, $\alpha^*$ et les solutions dans $\bbC$ vérifient $\Re(\alpha)<\alpha^*$. 
+    \`A présent, on veut montrer un estimation de type \eqref{eq_H-Y}, soit donc $\lambda >0$ quelconque (on donnera une condition sur $\lambda$ une fois la majoration déterminée). On a
+    \begin{eqnarray*}
+        \|(\lambda I-A)^{-1}g\|_{L^1} = \|f\|_{L^1} &=& \int_0^{a_{\max}} \bigg|\ex^{-\lambda a}\Pi(a)\bigg(f(0)+\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}g(s)\d s \bigg)\bigg| \d a \\
+        &\leq& \int_0^{a_{\max}} \ex^{-\lambda a} |f(0)| \d a +\int_0^{a_{\max}}\int_0^a \ex^{-\lambda a}\Pi(a)\frac{\ex^{\lambda s}}{\Pi(s)}|g(s)|\d s \d a \\
+        &\leq& \|\beta\|_{L^{\infty}}\|f\|_{L^1} \int_0^{a_{\max}} \ex^{-\lambda a}\d a + \int_0^{a_{\max}}\int_0^a \ex^{-\lambda(a-s)}|g(s)|\d s \d a \\
+        &\overset{\text{Fubini}}{=}& \|\beta\|_{L^{\infty}}\|f\|_{L^1} \int_0^{a_{\max}} \ex^{-\lambda a}\d a + \int_0^{a_{\max}}|g(s)|\int_{s}^{a_{\max}} \ex^{-\lambda (a-s)} \d a \d s \\
+        &\leq& \|\beta\|_{L^{\infty}}\|f\|_{L^1} \int_0^{+\infty} \ex^{-\lambda a}\d a + \int_0^{a_{\max}}|g(s)|\int_{s}^{+\infty} \ex^{-\lambda (a-s)} \d a \d s \\
+        &=& \|\beta\|_{L^{\infty}}\|f\|_{L^1} \bigg[-\frac{\ex^{-\lambda a}}{\lambda}\bigg]_{a=0}^{a \to +\infty} \\ 
+        &+& \int_0^{a_{\max}}|g(s)|\ex^{\lambda s} \bigg[-\frac{\ex^{-\lambda a}}{\lambda}\bigg]_{a=s}^{a \to +\infty}\d s \\
+        &=& \frac{\|\beta\|_{L^{\infty}}}{\lambda}\|f\|_{L^1} + \frac{1}{\lambda}\|g\|_{L^1}
+    \end{eqnarray*}
+    donc 
+    \begin{eqnarray*}
+        \|f\|_{L^1} \leq \frac{\|\beta\|_{L^{\infty}}}{\lambda}\|f\|_{L^1} + \frac{1}{\lambda}\|g\|_{L^1} &\Longrightarrow& 
+        \bigg(1-\frac{\|\beta\|_{L^\infty}}{\lambda}\bigg)\|f\|_{L^1} \leq \frac{1}{\lambda}\|g\|_{L^1} \\
+        &\Longrightarrow& \|f\|_{L^1} \leq \frac{1}{\lambda - \|\beta\|_{L^{\infty}}} \|g\|_{L^1}
+    \end{eqnarray*}
+    $g$ étant quelconque dans $L^1\big(]0,a_{\max}[\big)$, on a finalement 
+    \begin{equation*}
+        \vertiii{R(\lambda : A)}_{L^1} = \vertiii{(\lambda I- A)^{-1}}_{L^1} \leq \frac{1}{\lambda - \|\beta\|_{L^\infty}}
+    \end{equation*}
+    et $\lambda \in \ ]\|\beta\|_{L^{\infty}},+\infty[ \ \subset \rho(A)$.
+\end{proof}
+
+\paragraph{Conclusion.} Les trois propositions précédentes nous assurent que l'opérateur $A$ vérifie les hypothèses du théorème de Hille-Yosida \ref{cor_HY}, donc $A$ est le générateur d'un $\scrC^0$ semi-groupe que l'on note $\big\{T(t)\big\}_{t \geq 0}$ vérifiant 
+\begin{equation*}
+    \forall t \in \bbR_+, \ \vertiii{T(t)}_{L^1} \leq \exp\big({\|\beta\|_{L^\infty}t}\big)
+\end{equation*}
+
+\subsection{Existence et unicité}
+\begin{theorem}
+    Le problème de Cauchy \eqref{pbmCauchy_SG} admet une unique solution $x \in \scrC^0\big(\bbR_+, L^1(0,a_{\max})\big)$.
+\end{theorem}
+
+\begin{proof}
+    \begin{enumerate}
+    \item \textbf{Existence et unicité d'une solution dans $D(A)$.} Soit $x_0 \in D(A)$. On pose alors pour tout $t \in \bbR_+$
+    \begin{equation*}
+        \forall t \in \bbR_+, \ x(t) = T(t)x_0 \in D(A)
+    \end{equation*}
+    Alors par \ref{proprietes_SG} on obtient 
+    \begin{eqnarray*}
+        \frac{\d}{\d t}x(t) = AT(t)x_0 = Ax(t)
+    \end{eqnarray*}
+    et $x(0)=T(0)x_0=Ix_0=x_0$. Donc $x$ ainsi défini est une solution du problème de Cauchy \eqref{pbmCauchy_SG}. Pour l'unicité, on considère une autre solution $v$ de \eqref{pbmCauchy_SG} et on pose pour $t \in \bbR_+$ fixé
+    \begin{equation*}
+        \forall s \in \bbR_+, \ w(s) = T(t-s)v(s)
+    \end{equation*}
+    Alors $w$ est dérivable et on a par le théorème \ref{proprietes_SG}
+    \begin{equation*}
+        \frac{\d}{\d s} w(s) = -AT(t-s)v(s) + T(t-s)v'(s) = -AT(t-s)v(s) + T(t-s)Av(s) = 0
+    \end{equation*}
+    donc $w$ est constante, donc 
+    \begin{eqnarray*}
+        w(0)=w(t) &\iff& x(t) = T(t)x_0 = v(t)
+    \end{eqnarray*}
+    Comme $t$ est quelconque dans $\bbR_+$, on obtient le résultat pour tout $t \in \bbR_+$, donc $x=v$, ce qui montre l'unicité de la solution au problème \eqref{pbmCauchy_SG}.
+    \item \textbf{Existence et unicité d'une solution dans $L^1(0,a_{\max})$.} Soit maintenant $x_0 \in L^1(0,a_{\max})$. Par densité de $D(A)$ dans $L^1(0,a_{\max})$, il existe $(y_n)_{n \in \bbN} \subset D(A)$ telle que $y_n \overset{L^1}{\underset{n \to +\infty}{\longrightarrow}} x_0$. On a le problème de Cauchy suivant pour tout $n \in \bbN$
+    \begin{equation*}
+        \left\{\begin{array}{l}
+            \dfrac{\d}{\d t}x_n(t) = Ax_n(t) \ \ \ \ \ t>0 \\
+            \\
+            x(0)=y_n
+        \end{array}\right.
+    \end{equation*}
+    Par le raisonnement précédent, ce problème admet une unique solution pour tout $n \in \bbN$, cette solution est donnée par 
+    \begin{equation*}
+        \forall t \in \bbR_+, \ x_n(t) = T(t)y_n
+    \end{equation*}
+    Soit $t \in \bbR_+$. Montrons que la suite $\big(x_n(t)\big)_{n \in \bbN}$ est de Cauchy dans $L^1(0,a_{\max})$.
+    \begin{eqnarray*}
+        \|x_n(t)-x_m(t)\|_{L^1} &=& \|T(t)(y_n-y_m)\|_{L^1} \\
+        &\leq& \vertiii{T(t)}_{L^1}\|y_n-y_m\|_{L^1} \\
+        &\leq& \exp\big(\|\beta\|_{L^\infty}t\big)\|y_n-y_m\|_{L^1}
+    \end{eqnarray*}
+    comme la suite $(y_n)_{n \in \bbN}$ converge, elle est de Cauchy dans $L^1(0,a_{\max})$, donc $\big(x_n(t)\big)_{n \in \bbN}$ est de Cauchy dans $L^1(0,a_{\max})$ qui est complet, donc elle converge vers un élément $x^*(t)$. Montrons que $x^*(t)=T(t)x_0$.
+    \begin{eqnarray*}
+        \|x^*(t)-T(t)x_0\|_{L^1} &\leq& \|x^*(t)-T(t)y_n\|_{L^1}+\|T(t)y_n-T(t)x_0\|_{L^1} \\
+        &\leq& \|x^*(t)-x_n(t)\|_{L^1} + \exp\big(\|\beta\|_{L^\infty}t)\|y_n - x_0\|_{L^1} \underset{n \to +\infty}{\longrightarrow} 0
+    \end{eqnarray*}
+    donc $x^*(t)=T(t)x_0$ dans $L^1(0,a_{\max})$. Comme $t$ est quelconque dans $\bbR_+$, on définit une solution 
+    \begin{equation*}
+        \forall t \in \bbR_+, \ x(t)=T(t)x_0 \in L^1(0,a_{\max})
+    \end{equation*}
+    On veut à présent appliquer le théorème \ref{thm_res_sol}, on sait que $R(\lambda : A)$ existe pour tout réel $\lambda \geq \|\beta\|_{L^\infty}$. De plus, on a 
+    \begin{equation*}
+        \frac{\ln\|R(\lambda:A)\|}{\lambda} \leq -\frac{\ln(\lambda - \|\beta\|_{L^\infty})}{\lambda} \leq 0
+    \end{equation*}
+    On peut alors appliquer le théorème \ref{thm_res_sol}, donc le problème \eqref{pbmCauchy_SG} admet au plus une solution dans $L^1(0,a_{\max})$, comme on a montré l'existence d'une solution on en déduit que cette solution est unique.
+    \end{enumerate}
+    Comme $\big\{T(t)\big\}_{t \geq 0}$ est un $\scrC^0$ semi-groupe, $x$ est bien continue. Supposons par l'absurde qu'il existe $T>0$ tel que $x \in \scrC^0\big([0,T],L^1(0,a_{\max})\big)$. Alors par le théorème \ref{CauchyLipschitz_explosiontempsfini}, on a 
+    \begin{equation*}
+        \lim_{t \to T}\|x(t)\|_{L^1} = +\infty
+    \end{equation*}
+    Or, 
+    \begin{equation*}
+        \forall t \in [0,T], \ \|x(t)\|_{L^1} \leq \exp(\|\beta\|_{L^\infty}T)\|x_0\|_{L^1}<+\infty
+    \end{equation*}
+    ce qui est absurde, donc $T=+\infty$ et $x$ est continue sur $\bbR_+$.
+\end{proof}
+
+\paragraph{Pourquoi choisit-on le cadre $L^1$ et pas $W^{1,1}$ ?} Cette question est légitime car $D(A)$ est un sous-ensemble de $W^{1,1}(0,a_{\max})$ avant d'être un sous-ensemble de $L^1(0,a_{\max})$. De plus, $W^{1,1}(0,a_{\max})$ est aussi un espace de Banach. Cependant, si on choisit une donnée initiale dans $W^{1,1}(0,a_{\max})$ alors la solution n'est pas forcément dans $W^{1,1}(0,a_{\max})$. Illustrons cela par un contre-exemple. On cherche donc $x_0 \in W^{1,1}(0,a_{\max})$ tel que la solution $x(t) \notin W^{1,1}(0,a_{\max})$ pour $t>0$. On doit choisir $x_0 \in W^{1,1}(0,a_{\max})$ telle que 
+\begin{equation*}
+    x_0(0) \neq \int_0^{a_{\max}}\beta(a)x_0(a)\d a
+\end{equation*}
+car sinon $x_0 \in D(A)$ et donc la solution $x(t) \in D(A)$. On considère les fonctions 
+\begin{eqnarray*}
+    x_0 \equiv 1 \ \ \ \ \ \mu(a) = \frac{1}{a_{\max}-a} \ \ \ \ \ \beta \equiv \frac{1}{2a_{\max}}
+\end{eqnarray*}
+où $\varepsilon>0$ est fixé. Alors 
+\begin{equation*}
+    \Pi(a) = \frac{a_{\max}-a}{a_{\max}}
+\end{equation*}
+et on a bien 
+\begin{equation*}
+    \int_0^{a_{\max}}\beta(a)x_0(a)\d a = \frac{1}{2} \neq x_0(0)=1
+\end{equation*}
+On raisonne à $t$ fixé dans $[0,a_{\max}]$. La solution est alors donnée par 
+\begin{equation*}
+    x(t)(a) = \left\{\begin{array}{cl}
+        \dfrac{\Pi(a)}{\Pi(a-t)} & \text{si } a \geq t, \\
+        & \\
+        B(t-a)\Pi(a) & \text{si } a < t.
+    \end{array}\right.
+\end{equation*}
+
+\begin{lemme}\label{lem_injec_W_C}
+    On a $W^{1,1}(0,a_{\max}) \subset \scrC^0(0,a_{\max})$.
+\end{lemme}
+
+\begin{proof}
+    Soit $u \in \scrC^{\infty}(0,a_{\max})\cap W^{1,1}(0,a_{\max})$. Soit $x,y \in \ ]0,a_{\max}[$. On a par le théorème fondamental de l'analyse
+    \begin{equation*}
+        u(y) = u(x) + \int_x^y u'(s)\d s
+    \end{equation*}
+    Alors 
+    \begin{equation*}
+        |u(y)| \leq |u(x)| + \bigg|\int_x^yu'(s)\d s\bigg| \leq |u(x)| + \int_0^{a_{\max}}|u'(s)|\d s
+    \end{equation*}
+    On intègre l'inégalité par rapport à $x$ et on obtient 
+    \begin{equation*}
+        a_{\max}|u(y)| \leq \|u\|_{L^1} + a_{\max}\|u'\|_{L^1}
+    \end{equation*}
+    En passant au sup sur $y$, on obtient finalement 
+    \begin{equation*}
+        \|u\|_{\scrC^0} \leq \max(1/a_{\max},1)\|u\|_{W^{1,1}}
+    \end{equation*}
+    Soit maintenant $u \in W^{1,1}(0,a_{\max})$. Par le théorème de Meyers-Serrin, $\scrC^{\infty}(0,a_{\max})\cap W^{1,1}(0,a_{\max})$ est dense dans $W^{1,1}(0,a_{\max})$, donc il existe une suite $(u_n)_{n \in \bbN} \subset \scrC^{\infty}(0,a_{\max})\cap W^{1,1}(0,a_{\max})$ telle que $u_n \overset{W^{1,1}}{\underset{n \to +\infty}{\longrightarrow}} u$. Par le raisonnement précédent, on a 
+    \begin{equation*}
+        \forall n \in \bbN, \ \|u_n\|_{\scrC^0} \leq \max(1/a_{\max},1)\|u_n\|_{W^{1,1}}
+    \end{equation*}
+    comme la suite converge dans $W^{1,1}(0,a_{\max})$, elle est de Cauchy dans $W^{1,1}(0,a_{\max})$ et donc elle est de Cauchy dans $\scrC^0$. On sait que $\big(\scrC^0(0,a_{\max}),\|\cdot\|_{\scrC^0}\big)$ est un espace de Banach, donc $(u_n)_{n \in \bbN}$ converge dans $\scrC^0(0,a_{\max})$ vers $v \in \scrC^0(0,a_{\max})$. On a de plus,
+    \begin{equation*}
+        \|u_n-v\|_{L^1} \leq a_{\max}\|u_n-v\|_{\scrC^0}
+    \end{equation*}
+    donc $u_n \overset{L^{1}}{\underset{n \to +\infty}{\longrightarrow}} v$. Par hypothèse, $u_n \overset{L^{1}}{\underset{n \to +\infty}{\longrightarrow}} u$, donc par unicité de la limite dans $L^1(0,a_{\max})$, $u=v$ presque partout donc $u$ admet un représentant continu et on a par passage à la limite 
+    \begin{equation*}
+        \|u\|_{\scrC^0} \leq \max(1/a_{\max},1)\|u\|_{W^{1,1}}
+    \end{equation*}
+    d'où l'inclusion.
+\end{proof}
+
+Supponsons par l'absurde que $x(t) \in W^{1,1}(0,a_{\max})$. Alors par le lemme précédent $x(t)$ admet un représentant continue $\tilde{x}$, \textit{i.e.} $x(t) = \tilde{x}$ presque partout. Or, $\Pi$ et $B$ sont continues, donc $x(t)$ est continue sur $]0,t[$ et sur $]t,a_{\max}[$. Ainsi, on a 
+\begin{eqnarray*}
+    \forall a \in \ ]0,t[, \ x(t)(a)=B(t-a)\Pi(a)=\tilde{x}(a) \ \ \ &\text{ et }& \ \ \ \forall a \in \ ]t, a_{\max}[, \ x(t)(a)= \Pi(a) = \tilde{x}(a)
+\end{eqnarray*}
+Et comme $\tilde{x}$ est continue, on a 
+\begin{eqnarray*}
+    \lim_{a \to t^-}\tilde{x}(a) = \lim_{a \to t^+}\tilde{x}(a) &\iff& \lim_{a \to t^-} B(t-a)\Pi(a) = \lim_{a \to t^+}\Pi(a) \\
+    \text{par continuité de $B$ et $\Pi$ } &\iff& B(0)\Pi(t) = \Pi(t) \\
+    &\iff& \frac{1}{2}\Pi(t) = \Pi(t)
+\end{eqnarray*}
+ce qui est absurde. Donc $x(t) \notin W^{1,1}(0,a_{\max})$.
+
+\subsection{Identification du semi-groupe}
+On a montré dans la démonstration du théorème de Hille-Yosida \ref{thm_HY} que, pour un $\scrC^0$ semi-groupe de contractions $\big(S(t)\big)_{t \geq 0}$ de générateur infinitésimal $B$, la résolvante de $B$ est donnée par 
+\begin{equation*}
+    \forall x \in X, \ R(\lambda : B)x = \int_0^{+\infty}\ex^{-\lambda t}S(t)x\d t
+\end{equation*}
+où $\lambda \in \bbR_+^*$. Si on reprend le raisonnement mené dans la remarque \ref{rq_SG} pour $S(t)=\ex^{-\|\beta\|_{L^\infty}t}T(t)$ et $B=A-\|\beta\|_{L^\infty}I$ alors on obtient pour tout $x \in L^1(0,a_{\max})$
+\begin{eqnarray*}
+    R(\lambda : B)x &=& \int_0^{+\infty}\ex^{-\lambda t}S(t)x\d t \\
+    &=& \int_0^{+\infty}\ex^{-\lambda t} \ex^{-\|\beta\|_{L^\infty} t}T(t)x\d t \\
+    &=& \int_0^{+\infty}\ex^{-(\lambda+\|\beta\|_{L^\infty})t}T(t)x\d t \\
+    &=& R(\lambda + \|\beta\|_{L^\infty} : A)x
+\end{eqnarray*}
+Si on pose $\mu = \lambda + \|\beta\|_{L^\infty}$, alors $\mu \in \ ]\|\beta\|_{L^\infty}, +\infty[$ et 
+\begin{equation*}
+    R(\mu : A)x = \int_0^{+\infty}\ex^{-\mu t}T(t)x\d t
+\end{equation*}
+En utilisant l'expression de la résolvante calculée précédemment, on va chercher à identifier le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$. Soient $f \in L^1(0,a_{\max})$ et $\lambda \in \ ]\|\beta\|_{L^\infty},+\infty[$. Alors $T(t)f$ est solution de 
+\eqref{modele_McKendrick_Lotka}. On a 
+\begin{eqnarray*}
+    \int_0^{+\infty}\ex^{-\lambda t}\big(T(t)f\big)(a)\d t &=& \big(R(\lambda : A)f\big)(a) \\
+    &=& \big((\lambda I - A)^{-1}f\big)(a) \\
+    &=& \ex^{-\lambda a}\Pi(a)\big((\lambda I - A)^{-1}f\big)(0)+\ex^{-\lambda a}\Pi(a)\int_0^a\frac{\ex^{\lambda s}}{\Pi(s)}f(s)\d s \\
+    &=& \ex^{-\lambda a}\Pi(a)\int_0^{+\infty}\ex^{-\lambda s}\big(T(s)f\big)(0)\d s + \int_0^a\ex^{\lambda (a-s)}\frac{\Pi(a)}{\Pi(s)}f(s)\d s \\
+    \text{car $T(t)f$ est solution de \eqref{modele_McKendrick_Lotka} } &=& \int_0^{+\infty}\ex^{-\lambda (a+s)}\Pi(a)B(s)\d s + \int_0^a\ex^{-\lambda (a-s)}\frac{\Pi(a)}{\Pi(s)}f(s)\d s \\
+    &=& \int_a^{+\infty}\ex^{-\lambda t}\Pi(a) B(t-a)\d t + \int_0^a \ex^{-\lambda t}\frac{\Pi(a)}{\Pi(a-t)}f(a-t)\d t
+\end{eqnarray*}
+Alors, on pose 
+\begin{equation}\label{solution_SM}
+    \forall t \in \bbR_+, \ \forall f \in L^1(0,a_{\max}), \ \big(T(t)f\big)(a) := \left\{\begin{array}{cl}
+        \dfrac{\Pi(a)}{\Pi(a-t)}f(a-t) & \text{si } t \leq a, \\
+        & \\
+        \Pi(a)B(t-a) & \text{si } t > a.
+    \end{array}\right.
+\end{equation}
+
+\begin{remark}
+    La dépendance en $f$ dans l'expression de $T(t)$ dans le cas $t>a$ est implicite. En effet, $B$ est solution de l'équation de renouvellement \eqref{eq_renouvellement}, dont le terme $F$ dépend de la donnée initiale du problème \eqref{modele_McKendrick_Lotka}. Dans notre cas, le rôle de \og donnée initiale \fg{} est joué par $f$.
+\end{remark}
+
+\subsection{Comportement asymptotique}
+Avant d'étudier le comportement asymptotique de la solution, il nous faut vérifier plusieurs propriétés sur notre espace ambiant $L^1(0,a_{\max})$, le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ et le générateur infinitésimal $A$. Nous allons utiliser de nombreux résultats et raisonnement de \cite{Clement1987,Engel1991}. L'objectif de la section est d'appliquer le théorème \ref{thm_asymptotique2} afin d'avoir le comportement de la solution en temps long et en âge.
+
+\subsubsection{Propriétés de \texorpdfstring{$L^1(0,a_{\max})$}{L1(0,amax)}}
+Tout d'abord, il est évident que $L^1(0,a_{\max})$ est un ensemble ordonné pour la relation d'ordre 
+\begin{equation*}
+    f \leq g \iff \text{ p.p.t. } a \in \ ]0,a_{\max}[, \ f(a) \leq g(a)
+\end{equation*}
+Il découle immédiatement de cette propriété que $L^1(0,a_{\max})$ est un treillis de Banach. On a ensuite le cône positif de $L^1(0,a_{\max})$ donné par 
+\begin{equation*}
+    L^1_+(0,a_{\max}) := \big\{ f \in L^1(0,a_{\max}) \ | \  f \geq 0\big\}
+\end{equation*}
+Ce cône est normal, en effet pour $f,g \in L^1_+(0,a_{\max})$ tels que $f \leq g$, on a par monotonie de l'intégrale $\|f\|_{L^1} \leq \|g\|_{L^1}$. Et le cône est aussi générateur car pour $f \in L^1(0,a_{\max})$ on a $f_+,f_- \in L^1_+(0,a_{\max})$ et $f=f_+-f_-$. On utilisera aussi le fait que $\big(L^1(0,a_{\max})\big)' = L^\infty(0,a_{\max})$.
+
+\subsubsection{Propriétés du semi-groupe \texorpdfstring{$T(t)$}{T(t)} et de son générateur infinitésimal \texorpdfstring{$A$}{A}}
+\begin{proposition}
+    Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est positif.
+\end{proposition}
+
+\begin{proof}
+    Avec l'expression \eqref{solution_SM}, et sachant que $\Pi$ et $B$ sont positives, il est évident que $\big\{T(t)\big\}_{t \geq 0}$ est positif.
+\end{proof}
+
+\paragraph{Notation.}
+On considère l'ouvert $\omega \subset \ ]0,a_{\max}[$ constitué des points au voisinage desquels $\beta=0$ presque partout. Alors $\beta=0$ presque partout sur $\omega$. On définit alors le \textcolor{astral}{support essentiel} de $\beta$ par $\mathrm{Supp}_{\text{ess}}(\beta)=\ ]0,a_{\max}[ \ \setminus \omega$ et on pose $\overline{\beta} := \sup \mathrm{Supp}_{\text{ess}}(\beta)$.
+
+\begin{proposition}
+    Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est irréductible si et seulement si $\overline{\beta}=a_{\max}$.
+\end{proposition}
+
+\begin{proof}
+    Pour montrer que $\big\{T(t)\big\}_{t \geq 0}$ est irréductible, on va utiliser la proposition \ref{SG_irréductible} et montrer que $R(\lambda : A)$ est fortement irréductible pour tout $\lambda > s(A)$ et pour ça on va utiliser la définition \ref{def_fort_irreductible} et la proposition \ref{prop_pts_quasi_inter}. Soient donc $x \in L^1(0,a_{\max})$ telle que $x > 0$ (\textit{i.e.} positive et non identiquement nulle), $\lambda > s(A)$ et $\phi \in L^{\infty}(0,a_{\max})$ telle que $\phi > 0$ (\textit{i.e.} positive et non identiquement nulle). On a 
+    \begin{eqnarray*}
+        \langle R(\lambda : A)x,\phi \rangle &=& \int_0^{a_{\max}} \phi(a)\big(R(\lambda : A)x\big)(a)\d a \\
+        &=& \int_0^{a_{\max}} \phi(a)\ex^{-\lambda a}\Pi(a)\frac{\displaystyle{\int_0^{a_{\max}}}\ex^{-\lambda a}K(a)\displaystyle{\int_0^a} \dfrac{\ex^{\lambda s}}{\Pi(s)}x(s)\d s\d a}{1-\hat{K}(\lambda)}\d a \\
+        &+& \int_0^{a_{\max}} \phi(a)\ex^{-\lambda a}\Pi(a)\int_0^a \frac{\ex^{\lambda s}}{\Pi(s)}x(s)\d s\d a
+    \end{eqnarray*}
+    La deuxième intégrale est positive car toutes les fonctions sont positives. Il suffit donc de montrer que la première intégrale est strictement positive. Comme $\lambda > s(A)$, on sait déjà que l'intégrale est au moins positive. On a 
+    \begin{align*}
+        &\int_0^{a_{\max}} \phi(a)\ex^{-\lambda a}\Pi(a)\frac{\displaystyle{\int_0^{a_{\max}}}\ex^{-\lambda a}K(a)\displaystyle{\int_0^a} \dfrac{\ex^{\lambda s}}{\Pi(s)}x(s)\d s\d a}{1-\hat{K}(\lambda)}\d a > 0 \\ 
+        \iff\quad & \int_0^{a_{\max}} \ex^{-\lambda a}K(a) \int_0^a \frac{\ex^{\lambda s}}{\Pi(s)} x(s)\d s \d a > 0 \\
+        \iff\quad & \int_0^{a_{\max}} \int_s^{a_{\max}} \ex^{-\lambda (a-s)}\frac{\Pi(a)}{\Pi(s)} \beta(a)x(s)\d a \d s > 0 \\
+        \iff\quad & \int_0^{a_{\max}} \int_s^{a_{\max}} \beta(a)x(s)\d a\d s >0 \\ 
+        \iff\quad & \int_0^{a_{\max}}x(s) \int_s^{a_{\max}} \beta(a)\d a\d s >0 \\ 
+        \iff\quad & \int_0^{\overline{\beta}}x(s)\d s >0
+    \end{align*}
+    pour la dernière équivalence, si $s<\overline{\beta}$ alors l'intégrale de $\beta$ est positive ou nulle car $\beta \geq 0$ par hypothèse, et si $s \geq \overline{\beta}$ alors l'intégrales est nulle. Finalement, $\big\{T(t)\big\}_{t \geq 0}$ est irréductible si et seulement si cette dernière intégrale est strictement positive pour tout $x >0$ dans $L^1(0,a_{\max})$. Il nous faut donc montrer que 
+    \begin{equation*}
+        \forall x \in L^1_+(0,a_{\max}) \setminus \{0\}, \ \int_0^{\overline{\beta}}x(s)\d s >0 \iff \overline{\beta} = a_{\max}
+    \end{equation*}
+    $\boxed{\Longleftarrow}$ Si $\overline{\beta}=a_{\max}$, alors on a bien $\displaystyle{\int_0^{\overline{\beta}}}x(s)\d s >0$ car $x \in L^1_+(0,a_{\max}) \setminus \{0\}$. \\
+    $\boxed{\Longrightarrow}$ Supposons par l'absurde que $\overline{\beta}<a_{\max}$. Alors en prenant $x = \mathds{1}_{[\overline{\beta},a_{\max}]}$, on a bien $x$ qui est non identiquement nulle et postive car 
+    \begin{equation*}
+        \|x\|_{L^1}a_{\max}-\overline{\beta} >0
+    \end{equation*}
+    mais 
+    \begin{equation*}
+        \int_0^{\overline{\beta}}x(a)\d a = 0
+    \end{equation*}
+    ce qui contredit l'hypothèse de départ. Donc $\overline{\beta}=a_{\max}$. \\
+    Finalement, 
+    \begin{equation*}
+        \langle R(\lambda : A)x, \phi \rangle >0
+    \end{equation*}
+    donc $R(\lambda : A)x$ est un point quasi-intérieur et $R(\lambda : A)$ est fortement irréductible. Donc par la proposition \ref{SG_irréductible}, $\big\{T(t)\big\}_{t \geq 0}$ est irréductible.
+\end{proof}
+
+Dans la suite, on supposera donc $\overline{\beta}=a_{\max}$ afin d'avoir le caractère irréductible du semi-groupe.
+
+\begin{proposition}\label{prop_res_compacte}
+    La résolvante $R(\lambda : A)$ est compacte pour $\lambda \in \rho(A)$.
+\end{proposition}
+
+\begin{proof}
+    Soit $\lambda \in \rho(A)$. Pour montrer que la résolvante $R(\lambda : A)$ est compacte on va utiliser la proposition \ref{prop_injec_compacte} et montrer que l'injection de $D(A)$ dans $L^1(0,a_{\max})$ est compacte. Comme l'injection est une application linéaire, on peut utiliser la définition d'un opérateur compact, puis le théorème de Riesz-Fréchet-Kolmogorov \ref{cor_Riesz_Frechet_Kolmogorov}. Soit donc $B$ la boule unité fermée de $\big(D(A),\|\cdot\|_{A}\big)$. Soit $f \in B$. On a déjà montré l'estimation \eqref{norme_W_DA}, donc 
+    \begin{equation*}
+        f \in \overline{B_{W^{1,1}}(0,\|\beta\|_{L^\infty}+3)}
+    \end{equation*}
+    Soient $\omega \subset \subset \ ]0,a_{\max}[$ et $h \in \bbR$ tel que $|h| < \mathrm{dist}\big(\omega, \bbR \setminus \ ]0,a_{\max}[\big)$. Comme $f \in W^{1,1}(0,a_{\max})$ on sait par le lemme \ref{lem_injec_W_C} que $f$ admet un représentant continu $\tilde{f}$. On a pour $x \in \omega$
+    \begin{equation*}
+        \tilde{f}(x+h)-\tilde{f}(x) = \int_x^{x+h}f'(s)\d s = h \int_0^1f'(x+sh)\d s
+    \end{equation*}
+    donc 
+    \begin{equation*}
+        |\tilde{f}(x+h)-\tilde{f}(x)| \leq |h| \int_0^1|f'(x+sh)|\d s 
+    \end{equation*}
+    on intègre ensuite par rapport à $x$ sur $\omega$
+    \begin{eqnarray*}
+        \int_{\omega}|f(x+h)-f(x)|\d x = \|\tau_hf-f\|_{L^1(\omega)} &\leq& |h| \int_{\omega}\int_0^1 |f'(x+sh)|\d s\d x \\
+        &\overset{\text{Fubini}}{=}& |h| \int_0^1\int_{\omega}|f'(x+sh)|\d x\d s \\
+        &=& |h| \int_0^1 \int_{\omega +sh}|f'(x)|\d x \d s \\
+        &\leq& |h|\int_0^1 \int_0^{a_{\max}} |f'(x)|\d x\d s \\
+        &=& |h| \|f'\|_{L^1} \\
+        &\leq& |h|\big(\|\beta\|_{L^\infty}+3)
+    \end{eqnarray*}
+    d'où la condition \og d'équicontinuité intégrale \fg{}. Soit maintenant $\varepsilon >0$. On a (on note $I = \ ]0,a_{\max}[$ pour simplifier) par le théorème \ref{thm_injec_W_Linfini}
+    \begin{equation*}
+        \|f\|_{L^1(I \setminus \omega)} \leq \|f\|_{L^\infty}|I \setminus \omega| \leq C|I \setminus \omega|
+    \end{equation*}
+    et on choisit $\omega$ de sorte que $C|I\setminus \omega| < \varepsilon$. Les hypothèses du théorème \ref{cor_Riesz_Frechet_Kolmogorov} sont vérifiées, donc $B$ est relativement compact dans $L^1(0,a_{\max})$. Donc l'injection de $D(A)$ dans $L^1(0,a_{\max})$ est compacte, donc par la proposition \ref{prop_injec_compacte} la résolvante $R(\lambda : A)$ est compacte.
+\end{proof}
+
+\begin{proposition}\label{SG_T_compact}
+    Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est éventuellement compact.
+\end{proposition}
+
+\begin{proof}
+    On sait déjà par la proposition précédente que la résolvante $R(\lambda : A)$ est compacte pour $\lambda \in \rho(A)$. On voudrait appliquer le théorème \ref{thm_SG_compact_res}, il nous faut donc montrer l'existence d'un $t_0$ à partir duquel $t \mapsto T(t)$ est continue pour la norme des opérateurs. Soit $t > a_{\max}$. Soit $x \in L^1(0,a_{\max})$ tel que $x \neq 0$. On a pour $h \in \bbR$
+    \begin{eqnarray*}
+        \|T(t+h)x-T(t)x\|_{L^1} = \int_0^t |B(t+h-a)-B(t-a)|\Pi(a)\d a
+    \end{eqnarray*}
+    On va utiliser l'expression de $B$ donnée par l'équation de renouvellement \eqref{eq_renouvellement}. On a 
+    \begin{equation*}
+        F(t+h-a)=\int_0^{a_{\max}} \beta(\sigma + t+h-a)x(\sigma)\frac{\Pi(\sigma+t+h-a)}{\Pi(\sigma)}\d \sigma
+    \end{equation*}
+    On a 
+    \begin{equation*}
+        \begin{array}{ccccc}
+            0 \leq a \leq t && 0 \leq \sigma \leq a_{\max} && a_{\max} < t
+        \end{array}
+    \end{equation*}
+    donc 
+    \begin{equation*}
+        a_{\max} - t < \sigma - a \Longrightarrow a_{\max} < \sigma + t - a
+    \end{equation*}
+    donc $\beta \equiv 0$ dans l'expression de $F(t+h-a)$, et donc $F(t+h-a)=F(t-a)=0$. Donc,
+    \begin{eqnarray*}
+        \|T(t+h)x-T(t)x\|_{L^1} &=& \int_0^t\Pi(a) |B(t+h-a)-B(t-a)|\d a \\
+        &=& \int_0^t \Pi(t-s)|B(s+h)-B(s)|\d s \\
+        &=& \int_0^t \Pi(t-s)\bigg|\int_0^{s+h}K(a)B(s+h-a)\d a - \int_0^sK(a)B(s-a)\d a\bigg| \d s
+    \end{eqnarray*}
+    On a ensuite 
+    \begin{eqnarray*}
+        \bigg|\int_0^{s+h}K(a)B(s+h-a)\d a - \int_0^sK(a)B(s-a)\d a\bigg| &=& \bigg| \int_0^sK(a)\big(B(s+h-a)-B(s-a)\big)\d a \\
+        &+& \int_s^{s+h}K(a)B(s+h-a)\d a \bigg|
+    \end{eqnarray*}
+    L'estimation \eqref{estim_renouv_B} nous donne
+    \begin{eqnarray*}
+        \bigg|\int_s^{s+h}K(a)B(s+h-a)\d a \bigg| &\leq& |h|\beta_+^2 \|x\|_{L^1}\int_s^{s+h}\ex^{\beta_+(s+h-a)}\d a \\
+        &=& |h|\beta_+\|x\|_{L^1}\big(\ex^{\beta_+h}-1\big)
+    \end{eqnarray*}
+    Puis, on pose $\Phi : s \mapsto B(s+h)-B(s)$, $\Phi$ est continue car $B$ est continue, et on a 
+    \begin{eqnarray*}
+        |B(s+h)-B(s)| = |\Phi(s)| &=& \bigg| \int_0^sK(a)\big(B(s+h-a)-B(s-a)\big)\d a \\
+        &+& \int_s^{s+h}K(a)B(s+h-a)\d a \bigg| \\
+        &\leq& \int_0^s K(s-a)|\Phi(a)|\d a + |h|\beta_+\|x\|_{L^1}\big(\ex^{\beta_+}-1\big) \\
+        &\leq&\int_0^s \beta_+|\Phi(a)|\d a + |h|\beta_+\|x\|_{L^1}\big(\ex^{\beta_+}-1\big)
+    \end{eqnarray*}
+    On peut appliquer le lemme de Grönwall et on obtient 
+    \begin{equation*}
+        |\Phi(s)| \leq \beta_+\|x\|_{L^1}|h|\big(\ex^{\beta_+h}-1\big)\ex^{\beta_+s}
+    \end{equation*}
+    Ainsi, 
+    \begin{eqnarray*}
+        \|T(t+h)x-T(t)x\|_{L^1} &\leq& \int_0^t|\Phi(s)|\d s \\
+        &\leq& \beta_+\|x\|_{L^1}|h|\big(\ex^{\beta_+h}-1\big)\int_0^t\ex^{\beta_+s}\d s \\
+        &=& \|x\|_{L^1}|h|\big(\ex^{\beta_+h}-1\big)\big(\ex^{\beta_+t}-1\big)
+    \end{eqnarray*}
+    Comme $x$ est quelconque dans $L^1(0,a_{\max})$, on obtient 
+    \begin{equation*}
+        \vertiii{T(t+h)-T(t)}_{L^1} \leq |h|\big(\ex^{\beta_+h}-1\big)\big(\ex^{\beta_+t}-1\big)
+    \end{equation*}
+    donc en faisant tendre $h$ vers $0$, on obtient que le semi-groupe est continue pour $t>a_{\max}$ pour la norme des opérateurs. Par le théorème \ref{thm_SG_compact_res}, $\big\{T(t)\big\}_{t \geq 0}$ est éventuellement compact.
+\end{proof}
+
+\begin{corollaire}
+    On a  $\omega_{\text{ess}}(A)=-\infty$ et $\sigma_{\text{ess}}(A)=\emptyset$.
+\end{corollaire}
+
+\begin{proof}
+    Comme le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est éventuellement compact, on a $\omega_{\text{ess}}(A) = -\infty$. De plus, on a par le point $1$ de la proposition \ref{prop_lien_type_borne_spectrale} que 
+    \begin{equation*}
+        \sup\{\Re(\lambda) \in \bbR \ | \ \lambda \in \sigma_{\text{ess}}(A)\} \leq -\infty
+    \end{equation*}
+    donc $\sigma_{\text{ess}}(A)=\emptyset$.
+\end{proof}
+
+\begin{corollaire}
+    La borne spectrale de $A$ est égale au type du semi-groupe $\big\{T(t)\big\}_{t \geq 0}$, \textit{i.e.} $s(A)=\omega_0$. %De plus, $s(A)=\sup\{\lambda \in \bbR \ | \ \lambda \in \sigma(A)\}$.
+\end{corollaire}
+
+\begin{proof}
+    Comme $\omega_{\text{ess}}=-\infty$, le fait que $s(A)=\omega_0$ se déduit du point $2$ de la proposition \ref{prop_lien_type_borne_spectrale}. %Et le fait que $s(A)=\sup\{\lambda \in \bbR \ | \ \lambda \in \sigma(A)\}$ se déduit du théorème \ref{thm_borne_spect_et_resolvante}.
+\end{proof}
+
+\begin{theorem}\label{thm_spectre_A}
+    Le spectre de $A$ est 
+    \begin{equation*}
+        \sigma(A) = \{\lambda \in \bbC \ | \ \hat{K}(\lambda)=1\}
+    \end{equation*}
+    et $s(A)$ est l'unique solution réelle de $\hat{K}(\lambda)=1$. De plus, $\mathrm{VP}(A) = \sigma(A)$ et les valeurs propres sont isolées de multiplicité algébrique finie.
+\end{theorem}
+
+\begin{proof}
+    \begin{itemize}
+        \item On sait que si $\hat{K}(\lambda) \neq 1$ alors $R(\lambda : A)$ existe et est bijective, donc $\lambda \in \rho(A)$. Réciproquement, si $\hat{K}(\lambda)=1$ alors la résolvante $R(\lambda :A)$ explose, donc n'est pas bijective donc $\lambda \notin \rho(A)$. D'où le spectre de $A$.
+        \item On a déjà montré dans la section \ref{sec_comportement_asymptotique_caracteristique} que $\hat{K}$ admet une unique racine réelle $\alpha^*$ et que pour toute racine complexe $\lambda$ on a $\Re(\lambda) < \alpha^*$. Donc $s(A)=\alpha^*$.
+        \item Soient $\mu \in \rho(A)$ et $\lambda \in \bbC$. On a 
+        \begin{eqnarray*}
+            \lambda I - A &=& \mu I - A +(\lambda - \mu)I \\
+            &=& \mu I -A + (\lambda - \mu)R(\mu : A)(\mu I - A) \\
+            &=& \big(I-(\mu - \lambda)R(\mu : A)\big)(\mu I - A) \\
+            &=& \Big(\frac{1}{\mu - \lambda}I - R(\mu : A)\Big)(\mu I - A)
+        \end{eqnarray*}
+        Comme $\mu \in \rho(A)$, on sait que $\mu I -A$ est inversible, donc 
+        \begin{eqnarray*}
+            \lambda \in \rho(A) &\iff& \lambda I - A \text{ est inversible } \\
+            &\iff& \frac{1}{\mu - \lambda}I - R(\mu : A) \text{ est inversible } \\
+            &\iff& \frac{1}{\mu - \lambda} \in \rho\big(R(\mu : A)\big)
+        \end{eqnarray*}
+        On en déduit par définition du spectre que 
+        \begin{equation*}
+            \lambda \in \sigma(A) \iff \frac{1}{\mu - \lambda} \in \sigma\big(R(\mu : A)\big) \setminus \{0\}
+        \end{equation*}
+        On sait par la proposition \ref{prop_res_compacte} que la résolvante $R(\mu : A)$ est compacte, on peut donc appliquer le théorème de Riesz-Schauder \ref{thm_Riesz_Schauder}, alors on a 
+        \begin{equation*}
+            \sigma\big(R(\mu : A)\big) \setminus \{0\} = \mathrm{VP}\big(R(\mu: A)\big) \setminus \{0\}
+        \end{equation*}
+        De plus, si $\lambda \in \mathrm{VP}(A)$ et $f$ est une fonction propre associée à $\lambda$ alors 
+        \begin{eqnarray*}
+            Af = \lambda f &\iff& Af - \mu f = \lambda f - \mu f \\
+            &\iff& (\mu I - A)f = (\mu - \lambda)f \\
+            &\iff& R(\mu : A)f = \frac{1}{\mu - \lambda}f
+        \end{eqnarray*}
+        donc $\dfrac{1}{\mu-\lambda} \in \mathrm{VP}\big(R(\mu : A)\big) \setminus \{0\}$. On a donc montré que 
+        \begin{eqnarray*}
+            \lambda \in \sigma(A) &\iff& \frac{1}{\mu-\lambda} \in \sigma\big(R(\mu : A)\big) \setminus\{0\} \\
+            &\iff& \frac{1}{\mu-\lambda} \in \mathrm{VP}\big(R(\mu: A)\big) \setminus \{0\} \\
+            &\iff& \lambda \in \mathrm{VP}(A)
+        \end{eqnarray*}
+        autrement dit, $\sigma(A) = \mathrm{VP}(A)$. Le théorème de Riesz-Schauder \ref{thm_Riesz_Schauder} nous dit aussi que l'ensemble des valeurs propres de $R(\mu : A)$ est dénombrables, que toutes les valeurs propres non-nulles sont isolées et de multiplicité algébrique finie. Avec la relation entre $\mathrm{VP}\big(R(\mu: A)\big)$ et $\mathrm{VP}(A)$, on déduit les mêmes propriétés pour les valeurs propres de $A$.
+    \end{itemize}
+\end{proof}
+
+\begin{remark}
+    Comme $\alpha^*=s(A)=\omega_0$, on utilisera indifférement les trois notations dans la suite.
+\end{remark}
+
+\subsubsection{Comportement asymptotique}
+Toutes les hypothèses des théorèmes \ref{thm_asymptotique1} et \ref{thm_asymptotique2} sont vérifiées. On a tout d'abord par le théorème \ref{thm_asymptotique1}
+\begin{equation*}
+    \sigma_+(A)=\{s(A)\}
+\end{equation*}
+ce qui nous permet de retrouver le fait que $\alpha^*$ est la seule racine dominante de $1-\hat{K}$. De plus, il existe $\varepsilon >0$ tel que 
+\begin{eqnarray*}
+    \omega_{\text{ess}} \leq s(A)-\varepsilon \ \ \ &\text{ et }& \ \ \ \forall \lambda \in \sigma(A) \setminus \{s(A)\}, \ \Re(\lambda) \leq s(A)- \varepsilon
+\end{eqnarray*}
+Et comme $\big\{T(t)\big\}_{t \geq 0}$ est irréducible, on sait que $s(A)$ est un pôle d'ordre $1$ de $R(\lambda : A)$ avec multiplicté algébrique $1$. Puis, le point $3$ du théorème \ref{thm_asymptotique2} nous donne pour $x$ et $x^*$ bien choisis, pour toute donnée initiale $x_0 \in L^1(0,a_{\max})$ et pour tout $\eta \in \ ]0,\varepsilon[$, l'estimation 
+\begin{equation}\label{estim_SG}
+    \forall t \geq 0, \ \|\ex^{-\alpha^*t}T(t)x_0 - \langle x_0,x^*\rangle x\|_{L^1} \leq M_\eta\ex^{-\eta t}\|x_0\|_{L^1}
+\end{equation}
+où $M_\eta \geq 1$ est un constante qui dépend seulement de $\eta$. Il nous faut à présent identifier $x$ et $x^*$. On a les conditions suivantes : $x \in L_+^1(0,a_{\max})$ et $x^* \in L^\infty_+(0,a_{\max})$ tels que 
+\begin{equation*}
+    \begin{array}{ccccc}
+        Ax = \alpha^*x && A^*x^* = \alpha^*x^* && \langle x,x^*\rangle =1
+    \end{array}
+\end{equation*}
+et $A^*$ est l'adjoint de $A$.
+\begin{itemize}
+    \item Déterminons $x$. 
+    \begin{eqnarray*}
+        (Ax)(a) = \alpha^*x(a) &\Longrightarrow& -\mu(a)x(a)-x'(a) = \alpha^*x(a) \\
+        &\Longrightarrow& x'(a) = -\mu(a)x(a)-\alpha^*x(a) \\
+        &\Longrightarrow& x(a) = x(0)\ex^{-\alpha^*a}\Pi(a)
+    \end{eqnarray*}
+    \item Déterminons $A^*$. Soient $u \in D(A)$ et $v \in D(A^*)$.
+    \begin{eqnarray*}
+        \langle Au, v\rangle = \langle u,A^*v\rangle \iff \int_0^{a_{\max}} (Au)(a)v(a)\d a = \int_0^{a_{\max}} u(a)(A^*v)(a)\d a
+    \end{eqnarray*}
+    On a 
+    \begin{eqnarray*}
+        \int_0^{a_{\max}} (Au)(a)v(a)\d a &=& -\int_0^{a_{\max}} \mu(a)u(a)v(a)\d a- \int_0^{a_{\max}} u'(a)v(a)\d a \\
+        &\overset{\text{IPP}}{=}& -\int_0^{a_{\max}} \mu(a)u(a)v(a)\d a-\big[u(a)v(a)\big]_0^{a_{\max}} \int_0^{a_{\max}} u(a)v'(a)\d a 
+    \end{eqnarray*}
+    On peut supposer vu, le contexte démographique du problème que, $u(a_{\max})=0$, et $u(0)$ est donnée par la condition au bord imposée par $u \in D(A)$, d'où 
+    \begin{equation*}
+        \int_0^{a_{\max}} u(a)(A^*v)(a)\d a = -\int_0^{a_{\max}} \mu(a)u(a)v(a)\d a + \int_0^{a_{\max}}u(a)v'(a)\d a + v(0)\int_0^{a_{\max}}\beta(a)\d a
+    \end{equation*}
+    En identifiant, on obtient 
+    \begin{equation*}
+        A^*v = -\mu v + v' + \beta v(0)
+    \end{equation*}
+    \item Déterminons $x^*$.
+    \begin{eqnarray*}
+        (A^*x^*)(a) = \alpha^*x^*(a) &\Longrightarrow& -\mu(a)v(a)+v'(a)+\beta(a)v(0)=\alpha^*v(a) \\
+        &\Longrightarrow& v'(a) = \alpha^*v(a) - \beta(a)v(0)+\mu(a)v(a) \\
+        &\Longrightarrow& v(a) = v(0)\frac{\ex^{\alpha^*a}}{\Pi(a)} - v(0)\int_0^a\frac{\ex^{\alpha^*a}}{\Pi(a)}\ex^{-\alpha^* s}\Pi(s)\beta(s)\d s \\
+        &\Longrightarrow& v(a) = v(0)\frac{\ex^{\alpha^*a}}{\Pi(a)}\Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big)
+    \end{eqnarray*}
+\end{itemize}
+Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $v(0)$ tel que 
+\begin{eqnarray*}
+    \langle x,x^*\rangle = 1 &\iff& \int_0^{a_{\max}}x(a)x^*(a)\d a \\
+    &\iff& v(0)\int_0^{a_{\max}} \Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big) \d a = 1 \\
+    &\iff& v(0) = \frac{1}{a_{\max}-\displaystyle{\int_0^{a_{\max}}}\displaystyle{\int_0^a}\ex^{-\alpha^* s}K(s)\d s\d a}
+\end{eqnarray*}
+Donc on a par \eqref{estim_SG}
+\begin{equation*}
+    \lim_{t \to +\infty} \big(T(t)x_0\big)(a) = \lim_{t \to +\infty} \ex^{\alpha^*(t-a)}\Pi(a)\langle x_0,x^*\rangle
+\end{equation*}
+on retrouve les résultats obtenus dans la section \ref{sec_comportement_asymptotique_caracteristique}.

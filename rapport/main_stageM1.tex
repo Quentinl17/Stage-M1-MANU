@@ -1,0 +1,62 @@
+\documentclass[12pt, a4paper]{article}
+
+
+\input{mise_en_page/headerQL_stageM1.tex}
+
+
+\begin{document}
+
+
+% --- PAGE DE GARDE --- %
+\input{mise_en_page/page_de_garde}
+\newpage
+
+
+% --- SOMMAIRE --- %
+\tableofcontents
+
+
+% --- OBJECTIFS --- %
+\input{mise_en_page/objectifs}
+\newpage
+
+
+% --- INTRODUCTION --- %
+\input{mise_en_page/intro}
+\newpage
+
+
+% --- CORPS DU TEXTE --- %
+% ===== Le modèle et sa dérivation ===== %
+\input{src/le_modele}
+\newpage
+
+% ===== Analyse mathématique ===== %
+% === Méthode des caractéristiques === %
+\input{src/analyse_math1.tex}
+\newpage
+
+% === Semi-groupes === %
+\input{src/analyse_math2.tex}
+\newpage
+
+% === Modèle non-linéaire === %
+\input{src/modele_non_lineaire.tex}
+\newpage
+
+
+% --- CONCLUSION --- %
+\input{mise_en_page/conclusion}
+\newpage
+
+
+% --- ANNEXES --- %
+\input{src/annexes.tex}
+\newpage
+
+
+% --- BIBLIOGRAPHIE --- %
+\input{mise_en_page/bibliographie/biblio.tex}
+
+
+\end{document}

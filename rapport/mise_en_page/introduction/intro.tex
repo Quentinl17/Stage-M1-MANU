@@ -1,0 +1,28 @@
+% ==========================
+% Introduction 
+% ==========================
+
+\vspace*{1cm}
+
+\begin{center}
+    \Large\textbf{Introduction}
+\end{center}
+
+L'équation de McKendrick-Lotka est une équation aux dérivées partielles utilisée en dynamique des populations pour modéliser l'évolution d'une population structurée par l'âge. Introduite indépendamment par McKendrick en 1926 puis par Lotka quelques années plus tard, elle permet de décrire la répartition des individus au cours du temps en tenant compte simultanément du vieillissement, des décès et des naissances. Une forme classique de cette équation s'écrit
+\begin{equation*}
+\left\{\begin{array}{l}
+    \partial_t x(a,t)+\partial_a x(a,t)=-\mu(a)x(a,t) \\
+    x(0,t) = \displaystyle{\int_0^{a_{\max}}}\beta(a)x(a,t)\d a
+\end{array}\right.
+\end{equation*}
+où
+\begin{itemize}
+\item $x(a,t)$ désigne la densité d'individus d'âge $a$ à l'instant $t$,
+\item $\mu(a)$ est le taux de mortalité des individus d'âge $a$,
+\item $\beta(a)$ est le taux de natalité des individus d'âge $a$,
+\item la condition au bord traduit le renouvellement de la population par les naissances, celles-ci étant déterminées par la contribution de l'ensemble des individus fertiles.
+\end{itemize}
+
+Ce modèle trouve des applications dans de nombreux domaines scientifiques. En démographie, il permet d'étudier l'évolution de la structure par âge d'une population ainsi que son comportement à long terme. En écologie, il est utilisé pour analyser la dynamique d'espèces animales ou végétales dont les taux de survie et de reproduction dépendent de l'âge. En épidémiologie, il peut servir de base à des modèles plus élaborés où l'âge influence la transmission ou la progression d'une maladie. Enfin, ce cadre est également employé en gestion des ressources biologiques, notamment pour l'étude des populations de poissons ou d'insectes, afin d'évaluer l'impact de différentes politiques d'exploitation ou de conservation.
+\\
+Nous commencerons par étudier le modèle de Malthus, qui est considéré comme le premier ayant créé un modèle mathématique sur la croissance démographique. Puis nous motiverons la structure en âge qui permet de mieux retranscrire la réalité, le modèle de Malthus ne prenant pas en compte de nombreux paramètres qui permettent de décrire une population. Il s'agira ensuite de dériver le modèle de McKendrick-Lotka afin d'obtenir l'équation et la condition au bord ci-dessus. Dans un premier temps, nous résoudrons ce problème par la méthode des caractéristiques. En effet, l'équation de McKendrick-Lotka est une équation de transport on peut donc la résoudre en utilisant cette méthode. Cependant, la conditon au bord va poser problème car la solution dépendra d'elle même. Pour résoudre cela, on utilisera des résultats sur les équations intégrales de Volterra. Nous terminerons cette partie par l'étude asymptotique de notre solution à l'aide de la transformée de Laplace dans le but de comprendre le comportement de notre population en temps long. Puis, dans un second temps, nous utiliserons la théorie des semi-groupes pour résoudre ce problème. Il faudra dans ce cas faire appel à de nombreux résultats d'analyse fonctionnelle sur la théorie des opérateurs et la théorie spectrale. Nous terminerons aussi cette section par l'étude asymptotique afin de vérifier que l'on retrouve bien les résultats de la section précédente, ou bien des résultats plus précis. Enfin, nous terminerons par l'étude d'un modèle de McKendrick-Lotka non-linéaire, en commençant à nouveau par l'étude d'un modèle EDO, le modèle de Verhulst. En se basant sur ce modèle, on cherchera à définir un modèle de McKendrick-Lotka non-linéaire. L'étude d'existence et d'unicité sera bien plus simple car de nombreux résultats vus lors de la section précédente s'adapteront à l'ajout d'un terme non-linéaire. Nous conclurons cette section par l'étude de points d'équilibre et de leur stabilité.

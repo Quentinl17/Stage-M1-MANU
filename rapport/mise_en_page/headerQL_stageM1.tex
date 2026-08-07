@@ -1,0 +1,344 @@
+\makeatletter
+
+% --- MISE EN PAGES --- %
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{xcolor}
+\usepackage{lmodern}
+\usepackage{dsfont}
+\usepackage[a4paper,hmargin=20mm,vmargin=20mm]{geometry}
+
+\usepackage{subcaption}
+\usepackage{tocloft}
+
+\usepackage{yhmath}
+\usepackage{eurosym}
+\usepackage{diagbox}
+\usepackage{enumitem}
+\setlist[itemize,1]{label={\color{black}\small \textbullet}}
+\usepackage{multicol}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{minted}
+\usepackage{tikz}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+% --- DEFINE COLORS --- %
+\definecolor{astral}{RGB}{46,116,181}
+
+\definecolor{lightorange}{RGB}{255,176,85} % couleur définition poly Dupont
+\definecolor{lightblue}{RGB}{137,181,226} % couleur proposition poly Dupont
+\definecolor{dustyrose}{RGB}{191,128,128} % couleur exemple poly Dupont
+\definecolor{midblue}{RGB}{42,112,180} % couleur théorème poly Dupont
+\definecolor{lightpink}{RGB}{255,170,170} % couleur exercice poly Dupont
+
+\definecolor{customlightblue}{RGB}{145,200,235} % bleu plus clair que celui des propositions
+\definecolor{matchinggreen}{RGB}{120,190,150} % vert dans le même ton que le bleu
+
+
+%----------
+%  Version
+%----------
+\usepackage[colorlinks=true, linkcolor=astral]{hyperref}
+\hypersetup{linktocpage, colorlinks=true, linkcolor=astral}
+
+\usepackage{fancyhdr} 
+\usepackage{stmaryrd}
+
+
+%----------
+% Maths environnement 
+%----------
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tikz-cd}
+
+
+
+% Commande norme triple
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert
+    \kern-0.25ex\left\vert #1 
+\right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+% Commande quotient propre
+\newcommand{\quotient}[2]{#1/{#2}}
+
+% Commande exponentielle
+\newcommand{\ex}{\mathrm{e}}
+
+% d droit
+\renewcommand{\d}{\mathrm{d}}
+
+% L^1_{loc}
+\newcommand{\Lloc}[1]{L^1_{\text{loc}}\big(#1\big)}
+
+% partie réelle
+\renewcommand{\Re}{\mathfrak{Re}}
+
+% partie imaginaire
+\renewcommand{\Im}{\mathfrak{Im}}
+
+% image
+\newcommand{\im}{\mathrm{Im}}
+
+\numberwithin{equation}{section}
+
+\newtheoremstyle{definitionSs}{\topsep}{\topsep}%
+     {}%         Body font
+     {}%         Indent amount (empty = no indent, \parindent = para indent)
+     {\sffamily\bfseries}% Thm head font
+     {.}%        Punctuation after thm head
+     { }%     Space after thm head (\newline = linebreak)
+     {\thmname{#1}\thmnumber{~#2}\thmnote{~#3}}%         Thm head spec
+
+\newtheoremstyle{plainSs}{\topsep}{\topsep}%
+     {\itshape}%         Body font
+     {}%         Indent amount (empty = no indent, \parindent = para indent)
+     {\sffamily\bfseries}% Thm head font
+     {.}%        Punctuation after thm head
+     { }%     Space after thm head (\newline = linebreak)
+     {\thmname{#1}\thmnumber{~#2}\thmnote{~#3}}%         Thm head spec
+
+\theoremstyle{definitionSs}
+\newtheorem{remark}{Remarque}[section]
+\newtheorem{example}{Exemple}[section]
+
+%\usepackage[framemethod=tikz]{mdframed}
+\usepackage[]{mdframed}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=lightorange,
+innerrightmargin=0pt,
+]{definition}{Définition}[section]
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=dustyrose,
+innerrightmargin=0pt,
+]{propdef}[definition]{Définition - Proposition}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=midblue,
+innerrightmargin=0pt,
+]{theorem}[definition]{Théorème}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=matchinggreen,
+innerrightmargin=0pt,
+]{lemme}[definition]{Lemme}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=lightblue,
+innerrightmargin=0pt,
+]{proposition}[definition]{Proposition}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=customlightblue,
+innerrightmargin=0pt,
+]{corollaire}[definition]{Corollaire}
+
+\newmdtheoremenv[
+hidealllines=true,
+leftline=true,
+skipabove=0pt,
+innertopmargin=-5pt,
+innerbottommargin=2pt,
+linewidth=4pt,
+linecolor=lightpink,
+innerrightmargin=0pt,
+]{method}[definition]{Méthode}
+
+% patch the way counter behave : one counter for all
+
+\crefname{definition}{defi}{defis}
+
+\crefname{propdef}{propdefs}{propdefss}
+\let\oldpropdef\propdef
+\renewcommand{\propdef}{%
+  \crefalias{definition}{propdef}% definition counter now looks like lemme
+  \oldpropdef}
+
+\crefname{lemme}{lemma}{lemmas}
+\let\oldlemme\lemme
+\renewcommand{\lemme}{%
+  \crefalias{definition}{lemme}% definition counter now looks like lemme
+  \oldlemme}
+
+\crefname{theorem}{thmm}{thmms}
+\let\oldtheorem\theorem
+\renewcommand{\theorem}{%
+  \crefalias{definition}{theorem}% definition counter now looks like lemme
+  \oldtheorem}
+
+\crefname{proposition}{prop}{props}
+\let\oldproposition\proposition
+\renewcommand{\proposition}{%
+  \crefalias{definition}{proposition}% definition counter now looks like lemme
+  \oldproposition}
+
+\crefname{corollaire}{corss}{corssss}
+\let\oldcorollaire\corollaire
+\renewcommand{\corollaire}{%
+  \crefalias{definition}{corollaire}% definition counter now looks like lemme
+  \oldcorollaire}
+
+
+%---------------
+% Mise en page
+%--------------
+
+\setlength{\parindent}{0pt}
+
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep{\sffamily #1}}
+\providecommand{\defemph}[1]{{\sffamily\bfseries\color{black}#1}}
+\renewcommand{\emph}[1]{{\sffamily #1}}
+
+%\usepackage{titlesec, blindtext, color}
+%\newcommand{\hsp}{\hspace{20pt}}
+%\titleformat{\section}[hang]{\sffamily\Huge\bfseries}{\thesection\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+%\usepackage{sectsty}
+%\allsectionsfont{\color{black}\normalfont\sffamily\bfseries}
+%\renewcommand{\cfttoctitlefont}{\sffamily\bfseries\Huge\color{black}}
+%\renewcommand{\cftchapfont}{\sffamily\bfseries\color{black}}
+%\renewcommand{\cftsecfont}{\sffamily\bfseries}
+%\renewcommand{\cftsubsecfont}{\sffamily}
+
+% --- BIBLIOGRAPHIE --- %
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{mise_en_page/bibliographie/stageM1.bib}
+
+\usepackage{csquotes}
+\usepackage[toc, page]{appendix}
+
+
+% -------------
+% Some commands
+% -------------
+
+% --- LETTRES --- %
+% --- \mathbb{}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbG}{\mathbb{G}}
+\newcommand{\bbK}{\mathbb{K}}
+\newcommand{\bbL}{\mathbb{L}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbS}{\mathbb{S}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbU}{\mathbb{U}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+% --- \mathbf{}
+\newcommand{\bfC}{\mathbf{C}}
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfL}{\mathbf{L}}
+\newcommand{\bfN}{\mathbf{N}}
+\newcommand{\bfP}{\mathbf{P}}
+\newcommand{\bfQ}{\mathbf{Q}}
+\newcommand{\bfR}{\mathbf{R}}
+\newcommand{\bfZ}{\mathbf{Z}}
+
+% --- \mathcal{}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calU}{\mathcal{U}}
+
+% --- \mathfrak{}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\fF}{\mathfrak{F}}
+
+% --- \mathscr{}
+\usepackage{mathrsfs}
+\newcommand{\scrL}{\mathscr{L}}
+\newcommand{\scrF}{\mathscr{F}}
+\newcommand{\scrM}{\mathscr{M}}
+\newcommand{\scrD}{\mathscr{D}}
+\newcommand{\scrE}{\mathscr{E}}
+\newcommand{\scrA}{\mathscr{A}}
+\newcommand{\scrB}{\mathscr{B}}
+\newcommand{\scrC}{\mathscr{C}}
+\newcommand{\scrI}{\mathscr{I}}
+\newcommand{\scrJ}{\mathscr{J}}
+\newcommand{\scrK}{\mathscr{K}}
+\newcommand{\scrS}{\mathscr{S}}
+\newcommand{\scrO}{\mathscr{O}}
+\newcommand{\scrP}{\mathscr{P}}
+\newcommand{\scrR}{\mathscr{R}}
+\newcommand{\scrT}{\mathscr{T}}
+\newcommand{\scrZ}{\mathscr{Z}}
+
+
+
+
+

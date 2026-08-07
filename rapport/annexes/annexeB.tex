@@ -1,0 +1,190 @@
+% ==============
+% Annexe B 
+% ==============
+
+% ----------------------------------------------
+\section{Compléments sur \texorpdfstring{$L^p$}{Lp} et les espaces de Sobolev}
+% ----------------------------------------------
+\subsection{Critère de compacité forte dans \texorpdfstring{$L^p$}{Lp}}
+Voir \cite{Brezis1987} section $4.5$.
+\paragraph{Notations.}
+\begin{enumerate}
+    \item  On pose $(\tau_h f)(x):=f(x+h)$ la translation de $f$ par $h$.
+    \item Soit $\Omega \subset \bbR^N$ un ouvert. On dit qu'un ouvert $\omega$ est \textcolor{astral}{fortement inclus dans $\Omega$}, et on note $\omega \subset \subset \Omega$, si $\overline{\omega} \subset \Omega$ et $\overline{\omega}$ est compact.
+\end{enumerate}
+
+\begin{theorem}[Riesz-Fréchet-Kolmogorov]
+    Soit $\Omega \subset \bbR^N$ un ouvert et soit $\omega \subset \Omega$ borné. Soit $\calF$ un sous-ensemble borné de $L^p(\Omega)$ avec $1 \leq p < +\infty$. On suppose que 
+    \begin{equation*}
+        \forall \varepsilon >0, \ \exists \delta >0, \ \delta < \mathrm{dist}(\omega, \bbR^N \setminus \Omega), \ \forall h \in \bbR^N, \ \|h\| \leq \delta, \ \forall f \in \calF, \ \|\tau_hf-f\|_{L^p(\omega)} < \varepsilon
+    \end{equation*}
+    Alors $\calF_{|_{\omega}}$ est relativement compact dans $L^p(\omega)$.
+\end{theorem}
+
+\begin{remark}
+    C'est l'équivalent du théorème d'Arzéla-Ascoli dans $L^p$.
+\end{remark}
+
+\begin{proof}
+    On peut toujours se ramener à un domaine borné. En effet, si on pose 
+    \begin{equation*}
+        \Omega':=\big\{ x \in \Omega \ | \ \mathrm{dist}(x,\omega) < \mathrm{dist}(\omega, \bbR^N \setminus \Omega)=:d \big\}
+    \end{equation*}
+    Alors, comme $\omega$ est borné, il existe $r>0$ tel que 
+    \begin{equation*}
+        \omega \subset \overline{B(0,r)}
+    \end{equation*}
+    donc 
+    \begin{equation*}
+        \Omega' \subset \overline{B(0,r+d)}
+    \end{equation*}
+    On peut donc supposer $\Omega$ borné. Pour tout $f \in \calF$, on pose 
+    \begin{equation*}
+        \bar{f}(x) := \left\{\begin{array}{cl}
+            f(x) & \text{si } x \in \Omega, \\
+            0 & \text{si } x \in \bbR^N \setminus \Omega.
+        \end{array}\right.
+    \end{equation*}
+    et on note 
+    \begin{equation*}
+        \overline{\calF} := \big\{ \bar{f} \ | \ f \in \calF \big\}
+    \end{equation*}
+    Comme $\calF$ est bornée dans $L^p(\Omega)$, il existe $R>0$ tel que 
+    \begin{equation*}
+        \forall f \in \calF, \ \|f\|_{L^p(\Omega)} \leq R
+    \end{equation*}
+    Donc, on a 
+    \begin{equation*}
+        \forall \bar{f} \in \overline{\calF}, \ \|\bar{f}\|_{L^p(\bbR^N)} = \bigg(\int_{\bbR^N}|\bar{f}(x)|^p\d x\bigg)^{1/p} = \bigg(\int_{\Omega}|f(x)|^p\d x\bigg)^{1/p} = \|f\|_{L^p(\Omega)} \leq R
+    \end{equation*}
+    donc $\overline{\calF}$ est bornée dans $L^p(\bbR^N)$. De plus, $\overline{\calF}$ est bornée dans $L^1(\bbR^N)$, en effet 
+    \begin{eqnarray*}
+        \forall \bar{f} \in \overline{\calF}, \ \|\bar{f}\|_{L^1(\bbR^N)} &=& \int_{\bbR^N}|\bar{f}(x)|\d x \\
+        &=& \int_{\Omega}|f(x)|\times 1 \d x \\
+        \text{Hölder } &\leq& \|f\|_{L^p(\Omega)} \times \|1\|_{L^q(\Omega)} \\
+        &=& \|f\|_{L^p(\Omega)} |\Omega|^{1/q} \\
+        &\leq& R|\Omega|^{1/q}
+    \end{eqnarray*}
+    où $q$ désigne l'exposant conjugué de $p$. Maintenant, on procède en trois étapes.
+    \begin{enumerate}
+        \item Soit $(\rho_n)_{n \geq 1}$ une suite régularisante avec $\mathrm{Supp}(\rho_n) \subset B(0,1/n)$ pour tout $n \geq 1$. Soit $\bar{f} \in \overline{\calF}$. Soit $\varepsilon >0$. On a 
+        \begin{eqnarray*}
+            |(\rho_n*\bar{f})(x)-\bar{f}(x)| &=& \bigg| \int_{\bbR^N}\bar{f}(x-y)\rho_n(y)\d y - \bar{f}(x)\bigg| \\
+            &=& \bigg| \int_{\bbR^N}\bar{f}(x-y)\rho_n(y)\d y - \bar{f}(x)\int_{\bbR^N}\rho_n(y)\d y\bigg| \\
+            &=& \bigg|\int_{\bbR^N}\big(\bar{f}(x-y)-\bar{f}(x)\big)\rho_n(y)\d y\bigg| \\
+            &\leq& \int_{\bbR^N}\big|\bar{f}(x-y)-\bar{f}(x)\big|\rho_n(y)\d y
+        \end{eqnarray*}
+        \begin{lemme}[Inégalité de Jensen]
+            Soit $(\Omega, \scrA, \mu)$ un espace probabilisé. Si $f \in L^1(\Omega, \scrA, \mu)$ et $\phi : \bbR \rightarrow \bbR$ est convexe alors 
+            \begin{equation*}
+                \phi\bigg(\int_{\Omega}f\d\mu\bigg) \leq \int_{\Omega} \phi \circ f \d \mu
+            \end{equation*}
+        \end{lemme}
+        \begin{proof}
+            Admis.
+        \end{proof}
+        Comme $\rho_n(y)\d y$ est une mesure de probabilité et que la fonction $t \mapsto t^p$ est convexe, on a par l'inégalité de Jensen 
+        \begin{equation*}
+            |(\rho_n*\bar{f})(x)-\bar{f}(x)|^p \leq \int_{\bbR^N}\big|\bar{f}(x-y)-\bar{f}(x)\big|^p\rho_n(y)\d y
+        \end{equation*}
+        Par suite,
+        \begin{equation*}
+            |(\rho_n*\bar{f})(x)-\bar{f}(x)|^p \leq \int_{B(0,1/n)}\big|\bar{f}(x-y)-\bar{f}(x)\big|^p\rho_n(y)\d y
+        \end{equation*}
+        donc en intégrant par rapport à $x$ sur $\omega$ on obtient 
+        \begin{equation*}
+            \int_{\omega}|(\rho_n*\bar{f})(x)-\bar{f}(x)|^p \d x \leq \int_{B(0,1/n)}\rho_n(y)\int_{\omega}\big|\bar{f}(x-y)-\bar{f}(x)\big|^p\d x \d y
+        \end{equation*}
+        en prenant $n$ tel que $1/n < \delta$, on obtient par hypothèse 
+        \begin{equation*}
+            \int_{\omega}|(\rho_n*\bar{f})(x)-\bar{f}(x)|^p \d x \leq \int_{B(0,1/n)}\rho_n(y)\int_{\omega}\big|\bar{f}(x-y)-\bar{f}(x)\big|^p\d x \d y < \varepsilon^p
+        \end{equation*}
+        \item La famille $\scrK:=(\rho_n*\overline{\calF})_{|_{\overline{\omega}}}$ vérifie pour tout $n\geq 1$ les hypothèses du théorème d'Arzéla-Ascoli. Soit $n \ge 1$. On a 
+        \begin{equation*}
+            \forall \bar{f} \in \overline{\calF}, \ \|\rho_n*\bar{f}\|_{L^\infty(\bbR^N)} \leq \|\rho_n\|_{L^\infty(\bbR^N)}\|\bar{f}\|_{L^1(\bbR^N)} \leq \|\rho_n\|_{L^\infty(\bbR^N)}R|\Omega|^{1/q}
+        \end{equation*}
+        donc $\scrK$ est uniformément bornée. Soient $\varepsilon >0$ et $x \in \overline{\omega}$. On pose $C:=\|\nabla\rho_n\|_{L^\infty(\bbR^N)}R|\Omega|^{1/q} >0$. On a 
+        \begin{eqnarray*}
+            \forall \bar{f} \in \overline{\calF}, \ \forall y \in B\Big(x, \frac{\varepsilon}{C}\Big), \ |(\rho_n*\bar{f})(x)-(\rho_n*\bar{f})(y)|&=& \bigg|\int_{\bbR^N}\big(\rho_n(x-z)-\rho_n(y-z)\big)\bar{f}(z)\d z\bigg| \\
+            &\overset{\text{IAF}}{\leq}& \|\nabla\rho_n\|_{L^\infty(\bbR^N)}\|\bar{f}\|_{L^1(\bbR^N)}\|x-y\| \\
+            &\leq& \|\nabla\rho_n\|_{L^\infty(\bbR^N)}R|\Omega|^{1/q}\|x-y\| \\
+            &<&\varepsilon
+        \end{eqnarray*}
+        donc $\scrK$ est équicontinue. On peut donc appliquer le théorème d'Arzéla-Ascoli et donc la famille $\scrK$ est relativement compacte dans $\scrC(\overline{\omega},\bbR)$. Comme $\overline{\omega}$ est compact et l'injection $\scrC(\overline{\omega},\bbR) \hookrightarrow L^p(\omega)$ est continue 
+        \begin{equation*}
+            \forall u \in \scrC(\overline{\omega},\bbR), \ \|u\|_{L^p} \leq |\omega|^{1/p}\|u\|_{\infty}
+        \end{equation*}
+        on en déduit que $\scrK$ est relativement compacte dans $L^p(\omega)$.
+        \item Soit $\varepsilon >0$. On fixe $n \geq 1$ tel que $1/n < \delta$. Comme $\bar{f}=f$ sur $\omega$ on a par l'étape $1$
+        \begin{equation*}
+            \forall f \in \calF, \ \|\rho_n*\bar{f}-f\|_{L^p(\omega)} < \frac{\varepsilon}{2}
+        \end{equation*}
+        Par l'étape $2$, on recouvre $\scrK$ par un nombre fini de boules de centre $g_i:=\rho_n*\bar{f}_i$ où $\bar{f}_i \in \overline{\calF}$ et de rayon $\varepsilon/2$ dans $L^p(\omega)$. Soit maintenant $f \in \calF$, on a 
+        \begin{equation*}
+            \|f-g_i\|_{L^p(\omega)}=\|\bar{f}-g_i\|_{L^p(\omega)} \leq \|\bar{f}-\rho_n*\bar{f}\|_{L^p(\omega)} + \|\rho_n*\bar{f}-g_i\|_{L^p(\omega)} < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon
+        \end{equation*}
+        Donc $\calF_{|_{\omega}}$ est recouvert par un nombre fini de boules de rayon $\varepsilon$. Autrement dit, $\calF_{|_{\omega}}$ est relativement compact dans $L^p(\omega)$.
+    \end{enumerate}
+\end{proof}
+
+\begin{corollaire}\label{cor_Riesz_Frechet_Kolmogorov}
+    Soit $\Omega \subset \bbR^N$ un ouvert et soit $\calF$ un sous-ensemble borné de $L^p(\Omega)$ avec $1 \leq p <+\infty$. On suppose que pour tout $\omega \subset \subset \Omega$, on ait 
+    \begin{equation*}
+        \forall \varepsilon >0, \ \exists \delta >0, \ \delta < \mathrm{dist}(\omega, \bbR^N \setminus \Omega), \ \forall h \in \bbR^N, \ \|h\| \leq \delta, \ \forall f \in \calF, \ \|\tau_hf-f\|_{L^p(\omega)} < \varepsilon
+    \end{equation*}
+    et que 
+    \begin{equation*}
+        \forall \varepsilon >0, \ \exists \omega \subset \subset \Omega, \ \forall f \in \calF, \ \|f\|_{L^p(\Omega \setminus \omega)} < \varepsilon
+    \end{equation*}
+    Alors $\calF$ est relativement compact dans $L^p(\Omega)$.
+\end{corollaire}
+
+\begin{proof}
+    Soit $\varepsilon >0$. On fixe $\omega \subset \subset \Omega$ tel que 
+    \begin{equation*}
+        \forall f \in \calF, \ \|f\|_{L^p(\Omega \setminus \omega)} < \frac{\varepsilon}{2}
+    \end{equation*}
+    Par le théorème de Riesz-Fréchet-Kolmogorov, on sait que $\calF_{|_{\omega}}$ est relativement compact dans $L^p(\omega)$, donc 
+    \begin{equation*}
+        \exists g_1,\dots,g_k \in L^p(\omega), \ \calF_{|_{\omega}} \subset \bigcup_{i=1}^k B_{L^p(\omega)}\Big(g_i,\frac{\varepsilon}{2}\Big)
+    \end{equation*}
+    On pose pour tout $i \in \llbracket 1,k \rrbracket$
+    \begin{equation*}
+        \tilde{g}_i(x) :=\left\{\begin{array}{cl}
+            g_i(x) & \text{si } x \in \omega, \\
+            0 & \text{si } x \in \Omega \setminus \omega.
+        \end{array}\right.
+    \end{equation*}
+    Soit $f \in \calF$. Il existe $i \in \llbracket 1,k \rrbracket$ tel que 
+    \begin{equation*}
+        \|f-g_i\|_{L^p(\omega)} < \frac{\varepsilon}{2}
+    \end{equation*}
+    par conséquent
+    \begin{equation*}
+        \|f-\tilde{g}_i\|_{L^p(\Omega)}^p = \|f-\tilde{g}_i\|_{L^p(\omega)}^p + \|f-\tilde{g}_i\|_{L^p(\Omega \setminus \omega)}^p = \|f-g_i\|_{L^p(\omega)}^p + \|f\|_{L^p(\Omega \setminus \omega)}^p < \Big(\frac{\varepsilon}{2}\Big)^p+\Big(\frac{\varepsilon}{2}\Big)^p
+    \end{equation*}
+    donc 
+    \begin{equation*}
+        \|f-\tilde{g}_i\|_{L^p(\Omega)} < 2^{1/p-1}\varepsilon \leq \varepsilon
+    \end{equation*}
+    Ainsi,
+    \begin{equation*}
+        \calF \subset \bigcup_{i=1}^k B_{L^p(\Omega)}(\tilde{g}_i, \varepsilon)
+    \end{equation*}
+    donc $\calF$ est relativement compact dans $L^p(\Omega)$.
+\end{proof}
+
+\subsection{Espace de Sobolev}
+On considère l'espace de Sobolev $W^{1,p}(I)$ avec $p \in [1,+\infty]$ et $I$ un intervalle ouvert (pas nécessairement borné) de $\bbR$.
+
+\begin{theorem}\label{thm_injec_W_Linfini}
+    Il existe une constante $C$ dépendant seulement de $|I|\leq +\infty$ telle que 
+    \begin{equation*}
+        \forall p \in [1,+\infty], \ \forall u \in W^{1,p}(I), \ \|u\|_{L^\infty} \leq C\|u\|_{W^{1,p}}
+    \end{equation*}
+    Autrement dit, $W^{1,p}(I) \subset L^\infty(I)$ avec injection continue.
+\end{theorem}
+
+\begin{proof}
+    Voir Théorème $8.7$ page $129$ de \cite{Brezis1987}.
+\end{proof}
