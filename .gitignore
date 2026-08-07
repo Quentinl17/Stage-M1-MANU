@@ -3,6 +3,8 @@
 *.bbl
 *.bbl-SAVE-ERROR
 *.log
+*.bib
+*.blg
 *.out
 *.toc
 *.lof
@@ -15,5 +17,3 @@
 *.nav
 *.snm
 *.vrb
-*.bib
-*.blg
