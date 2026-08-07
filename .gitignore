@@ -1,0 +1,17 @@
+# Fichiers temporaires LaTeX
+*.aux
+*.bbl
+*.bbl-SAVE-ERROR
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
