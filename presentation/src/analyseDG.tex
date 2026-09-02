@@ -1,0 +1,87 @@
+\begin{frame}
+\begin{itemize}
+    \item  Fait un lien entre les méthodes de volumes finis et d'éléments finis. \\
+    Recherche de la formulation variationnelle puis on cherche la solution discrète.
+    \item Cependant grande différence avec ces méthodes, aucune continuité n’est imposée aux interfaces entre les éléments du maillage.
+\end{itemize}
+   
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/Galerkine_Discontinue/image_maille_GD.JPG}
+    \caption{Exemple d'une façon de gérer le flux au niveau de l'intervalle.}
+    \label{flux_GD_exemple}
+\end{figure}
+\begin{equation*}
+    \{\!\!\{v\}\!\!\}_F(x) := \tfrac{1}{2}\left(v|_{T_1}(x)+v|_{T_2}(x)\right) \ \ \ \ \ \ \ \ [\![v]\!] := v|_{T_1}(x)-v|_{T_2}(x)
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}{Réécrire le problème}
+\begin{itemize}
+\item On commence par partir du problème de Rayleigh-Stokes $1$D homogène
+\begin{equation*}
+    \begin{cases}
+        \partial_tu(t,x) - \nu\partial_{xx} u(t,x) - \alpha\partial_{txx} u(t,x) = 0 & (t,x) \in \mathbb R_+ \times \bbR  \\
+        u(0,x) = u_0(x) & x \in \bbR
+    \end{cases}
+\end{equation*}  
+\item Puis en faisant comme en élément fini, on se retrouve en $1D$ avec:
+\begin{equation*}
+    \int_{K_i} \partial_t uv + \nu \int_{K_i}\partial_{x}u\partial_{x}v \ + \alpha \int_{K_i} \partial_{tx}u\partial_{x}v
+    =  \nu \Big[\partial_{x}u v \Big]^{x_i +h/2}_{x_i - h/2} \ + \alpha \Big[\partial_{tx}u v \Big]^{x_i +h/2}_{x_i - h/2} 
+\end{equation*}
+\item Le choix de la base change le problème. Prenons la base $\{e_0\} = \{1\}$.
+\begin{equation*}
+    \partial_x u_h\big|_{x_i + h/2} = \frac{u_0^{i+1} - u_0^i}{h}, \qquad
+    \partial_x u_h\big|_{x_i - h/2} = \frac{u_0^i - u_0^{i-1}}{h}
+\end{equation*}
+\begin{equation*}
+    h\,\partial_t u_0^i = \frac{\nu}{h}\left(u_0^{i+1} - 2u_0^i + u_0^{i-1}\right)
+    + \frac{\alpha}{h}\left(\partial_t u_0^{i+1} - 2\partial_t u_0^i + \partial_t u_0^{i-1}\right)
+\end{equation*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Le cas P1}
+Pour $j$ valant $0$ ou $1$ on obtient le système suivant:
+\begin{eqnarray*}\label{EDP_RS_Formulation_Faible_P1}
+  &\partial_t u_i^0 \displaystyle{\int_{K_i}}  \phi_0 \phi_j + \partial_t u_i^1 \displaystyle{\int_{K_i}}   \phi_1 \phi_j& \\
+   &+\nu \ u_i^0  \displaystyle{\int_{K_i}} \partial_{x}\phi_0 \partial_{x}\phi_j  + \nu \ u_i^1 \displaystyle{\int_{K_i}} \partial_{x}\phi_1 \partial_{x}\phi_j& \\
+   &+ \alpha \partial_{t}u_i^0 \displaystyle{\int_{K_i}}  \partial_{x}\phi_0\partial_{x}\phi_j + \alpha \partial_{t}u_i^1 \displaystyle{\int_{K_i}}  \partial_{x}\phi_1\partial_{x}\phi_j &\\
+    &=& \\ 
+    &\nu \Big[\partial_{x}\big(u_i^0\phi_0 +u_i^1\phi_1 \big) \phi_j  \Big]^{x_i +h/2}_{x_i - h/2} \ + \alpha \Big[\partial_{tx}\big(u_i^0\phi_0 +u_i^1\phi_1 \big) \phi_j \Big]^{x_i +h/2}_{x_i - h/2} 
+\end{eqnarray*}
+Ce qui en calculant les matrices de rigidité et de masse donne:
+\begin{eqnarray*}
+    &&\begin{bmatrix}
+        h & 0 \\
+        0 & \frac{h}{12} 
+    \end{bmatrix}
+    \begin{bmatrix}
+    \partial_t u_i^0 \\
+    \partial_t u_i^1    
+    \end{bmatrix}
+    +
+        \begin{bmatrix}
+        0 & 0 \\
+        0 & \frac{\nu + \alpha \partial_t}{h} 
+    \end{bmatrix}
+    \begin{bmatrix}
+    u_i^0 \\
+    u_i^1    
+    \end{bmatrix}
+    = (\nu + \alpha\partial_t)
+    \begin{bmatrix}
+    \{\!\!\{ u_i^1 \}\!\!\}_{F_i} - \{\!\!\{ u_i^1 \}\!\!\}_{F_{i-1}}\\
+    \{\!\!\{ u_i^1 \}\!\!\}_{F_i} \times\frac{1}{2} - \{\!\!\{ u_i^1 \}\!\!\}_{F_{i-1}} \times (- \frac{1}{2})
+    \end{bmatrix} \\
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item Les problèmes de second grade doivent traiter de façon plus subtile le flux numérique.
+        \item La méthode reste naturelle pour traiter ce genre de problème. Le terme $\alpha$ permet de régulariser les phénomènes de chocs qui entraînent une diffusion numérique pour cette méthode.
+    \end{itemize}
+\end{frame}

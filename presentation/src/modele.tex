@@ -1,0 +1,102 @@
+% =====================================
+% Le modèle et sa dérivation
+% =====================================
+
+\subsection{Modèle de Malthus}
+\begin{frame}
+    \begin{itemize}
+        \item On considère une population homogène, isolée, qui vit dans un environnement stable avec des ressources illimitées. On note $P(t)$ le nombre total d'individu à l'instant $t \in \bbR_+$. \pause
+        \item Dans ces conditions, les variations de la population vont uniquement dépendre des taux de fertilité et de mortalité, notés respectivement $\beta$ et $\mu$, et supposés constants. \pause
+        \item On observe la variation de population sur un intervalle de la forme $[t,t+h]$. On a 
+        \begin{equation*}
+            P(t+h) = P(t) + \text{naissances} - \text{décès}
+        \end{equation*} \pause
+        \item Sur l'intervalle $[t,t+h]$, le nombre de naissance est $\beta P(t)h$ et le nombre de décès est $\mu P(t) h$. On substitue dans l'équation précédente et on obtient
+        \begin{equation*}
+            P(t+h)=P(t)+\beta P(t)h - \mu P(t)h
+        \end{equation*} \pause
+        \item En divisant par $h$ et en faisant tendre $h$ vers $0$, on obtient finalement \textcolor{astral}{\textit{l'équation de Malthus}}
+        \begin{equation*}
+            P'(t) = (\beta - \mu)P(t)
+        \end{equation*} \pause
+        \item La solution de cet EDO est donnée par $P(t) = P(0)\ex^{(\beta - \mu)t}$.
+    \end{itemize}
+\end{frame}
+
+\subsection{Modèle de McKendrick-Lotka}
+\begin{frame}{Les éléments de description}
+    \begin{itemize}
+        \item On va décrire l'évolution de la population par une fonction donnant la \textcolor{astral}{\textit{densité d'individu d'âge $a$ à l'instant $t$}}
+        \begin{equation*}
+            x(a,t) \geq 0, \ \ \ \ \ a \in [0,a_{\max}], \ t \geq 0
+        \end{equation*}
+        où $a_{\max}$ est l'âge maximal de la population, supposé fini. \pause
+        \item On introduit la fonction $\beta$ qui représente le \textcolor{astral}{\textit{taux de fertilité de la population}} en fonction de l'âge. On peut alors considérer le nombre total de nouveau né à l'instant $t$
+        \begin{equation*}
+            B(t):= \int_{0}^{a_{\max}}\beta(a)x(a,t)d a
+        \end{equation*} \pause
+        \item On introduit à présent la fonction $\mu$ qui représente le \textcolor{astral}{\textit{taux de mortalité}} de la population en fonction de l'âge.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Les éléments de description}
+    \begin{itemize}
+        \item On définit ensuite la \textcolor{astral}{\textit{probabilité de survie}}
+        \begin{equation*}
+            \Pi (a) := \exp\bigg(-\int_{0}^a \mu(\sigma)d \sigma\bigg)
+        \end{equation*}
+        et on pose $\Pi(a_{\max}) = 0$. \pause
+        \item On définit de plus la \textcolor{astral}{\textit{fonction de maternité}} pour tout $a \in [0,a_{\max}]$
+        \begin{equation*}
+            K(a) := \beta(a)\Pi(a)
+        \end{equation*} \pause 
+        \item Enfin, on définit le \textcolor{astral}{\textit{nombre de reproduction}}
+        \begin{equation*}
+            R := \int_0^{a_{\max}} \beta(a)\Pi(a)d a = \int_0^{a_{\max}} K(a)d a
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item On peut à présent définir le modèle de McKendrick-Lotka. Comme pour le modèle de Malthus, on étudie la variation de la population sur $[t,t+h]$
+        \begin{equation*}
+            x(a+h,t+h) = x(a,t) - \text{décès}
+        \end{equation*} \pause 
+        \item Le taux de décès entre $t$ et $t+h$ est donné par
+        \begin{equation*}
+            \int_0^{h}\mu(a+s)x(a+s,t+s)ds = \int_t^{t+h}\mu(a+s-t)x(a+s-t,s)d s
+        \end{equation*} \pause  
+        \item On pose $G(t) := \displaystyle{\int_0^t}\mu(a+s-t)x(a+s-t,s)ds$, d'où
+        \begin{equation*}
+            x(a+h,t+h)-x(a,t+h)+\big(x(a,t+h) - x(a,t)\big) = - \big(G(t+h)-G(t)\big)
+        \end{equation*} \pause
+        \item On divise par $h$ et on fait tendre $h$ vers $0$, on obtient alors \textcolor{astral}{\textit{l'équation de McKendrick-Lotka}}
+        \begin{equation*}
+            \partial_ax(a,t)+\partial_tx(a,t) = -\mu(a)x(a,t)
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item En ajoutant une donnée initiale, représentant la nombre d'individu d'âge $a$ à l'instant $t=0$, $x_0(a)$ et la condition au bord donnant le nombre de nouveau né à l'instant $t \in \bbR_+^*$, on obtient le \textcolor{astral}{\textit{modèle de McKendrick-Lotka}}
+        \begin{equation*}
+            \left\{\begin{array}{l}
+            \partial_a x(a,t) + \partial_t x(a,t) = -\mu(a)x(a,t) \\
+            x(0,t) = B(t) = \displaystyle{\int_0^{a_{\max}}} \beta (a)x(a,t)d a \\
+            x(a,0) = x_0(a)
+            \end{array}\right.
+        \end{equation*} \pause
+        \item Au vu du contexte démographique, il est raisonnable de faire les hypothèses suivantes \pause
+        \begin{itemize}
+            \item[$\triangleright$] $\beta \in L^{\infty}(0,a_{\max})$ et pour presque tout $a \in [0,a_{\max}]$, $0 \leq \beta(a) \leq \beta_+$ ; \pause
+            \item[$\triangleright$] comme $\Pi(a_{\max}) = 0$, on pose
+            \begin{equation*}
+                \int_0^{a_{\max}}\mu(\sigma)\d \sigma = +\infty
+            \end{equation*} \pause
+            \item[$\triangleright$] $\mu \in \Lloc{0,a_{\max}}$ et pour presque tout $a \in [0,a_{\max}]$, $\mu(a) \geq 0$ ; \pause
+            \item[$\triangleright$] $x_0 \in L^1(0,a_{\max})$ et pour presque tout $a \in [0,a_{\max}]$, $x_0(a) \geq 0$.
+        \end{itemize}
+    \end{itemize}
+\end{frame}

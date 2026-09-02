@@ -17,18 +17,18 @@
 
 
 % --- OBJECTIFS --- %
-\input{mise_en_page/objectifs}
+\input{mise_en_page/objectifs/objectifs.tex}
 \newpage
 
 
 % --- INTRODUCTION --- %
-\input{mise_en_page/intro}
+\input{mise_en_page/introduction/intro.tex}
 \newpage
 
 
 % --- CORPS DU TEXTE --- %
 % ===== Le modèle et sa dérivation ===== %
-\input{src/le_modele}
+\input{src/le_modele.tex}
 \newpage
 
 % ===== Analyse mathématique ===== %
@@ -46,13 +46,24 @@
 
 
 % --- CONCLUSION --- %
-\input{mise_en_page/conclusion}
+\input{mise_en_page/conclusion/conclusion.tex}
 \newpage
 
 
 % --- ANNEXES --- %
-\input{src/annexes.tex}
+\renewcommand{\appendixtocname}{Annexes}
+\renewcommand{\appendixpagename}{Annexes}
+
+\begin{appendices}
+% === Annexe A === %
+\input{annexes/annexeA.tex}
 \newpage
+
+% === Annexe B === %
+\input{annexes/annexeB.tex}
+\newpage
+
+\end{appendices}
 
 
 % --- BIBLIOGRAPHIE --- %

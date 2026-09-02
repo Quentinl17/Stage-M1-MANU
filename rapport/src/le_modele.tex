@@ -45,7 +45,7 @@ Il peut toutefois être utilisé pour des projections à court terme. Son princi
     On peut également faire évoluer le modèle de Malthus en ajoutant une fonction représentant la migration en fonction du temps, l'étude est la même et fait appel à la formule de Duhamel.
 \end{remark}
 
-\subsection{Modèle de McKendrick - Lotka}
+\subsection{Modèle de McKendrick-Lotka}
 L'objectif de cette section est d'introduire le modèle de référence pour l'étude démographique. Ce sont McKendrick \cite{McKendrick1926} et Lotka \cite{Lotka1911} qui sont à l'origine du modèle que nous allons étudier, mais nous utiliserons plutôt les travaux de Iannelli, Martcheva et Milner \cite{Iannelli2005} pour dériver le modèle. Il s'agit dans un premier temps de choisir les bons paramètres de description, leur donner un sens mathématique puis établir le modèle. On fait le choix de considérer seulement des modèles continus, la plupart de ces modèles ont leur analogue en discret (comme par exemple le modèle de Malthus) et donnent des résultats similaires.
 
 \subsubsection{Motivation de la structure en âge}
@@ -58,7 +58,7 @@ L'âge est l'un des paramètres les plus fondamentaux pour décrire une populati
 \end{itemize}
 Ignorer cette structure empêche de traiter des problèmes essentiels comme la planification de l'éducation, la gestion de la sécurité sociale ou les politiques de santé publique. On a quelques exemples de pyramides des âges dans différents pays dans \cite{Iannelli2017}. L'objectif est donc d'établir un modèle qui modélise l'évolution de la densité de population par âge au cours du temps, en incorporant une fécondité et une mortalité spécifiques à l'âge.
 
-\subsubsection{Les éléments de description.} 
+\subsubsection{Les éléments de description} 
 On veut donc construire un modèle continu qui dépend de l'âge et du temps, pour ça on reprend les notations de \cite{Iannelli2017}. On va décrire l'évolution de la population par une fonction donnant la \textcolor{astral}{\textit{densité d'individu d'âge $a$ à l'instant $t$}}
 \begin{equation*}
     x(a,t) \geq 0, \ \ \ \ \ a \in [0,a_{\max}], \ t \geq 0
@@ -135,8 +135,8 @@ il donne la moyenne du nombre de nouveau né qu'un individu produit au cours de 
     \end{equation*}
 \end{remark}
 
-\subsubsection{Modèle de McKendrick - Lotka}
-On peut à présent définir le modèle de McKendrick - Lotka comme dans \cite{Iannelli2005}. Soient $t \in \bbR_+$, $a \in [0,a_{\max}]$ et $h>0$. Comme pour le modèle de Malthus, on observe la variation de la population entre $t$ et $t+h$. Cependant, la structure en âge apporte une configuration différente au modèle. Si une période de temps $h$ s'est écoulée, alors l'âge des individus a augmenté en passant de $a$ à $a+h$. D'où la variation de la population sur $[t,t+h]$
+\subsubsection{Modèle de McKendrick-Lotka}
+On peut à présent définir le modèle de McKendrick-Lotka comme dans \cite{Iannelli2005}. Soient $t \in \bbR_+$, $a \in [0,a_{\max}]$ et $h>0$. Comme pour le modèle de Malthus, on observe la variation de la population entre $t$ et $t+h$. Cependant, la structure en âge apporte une configuration différente au modèle. Si une période de temps $h$ s'est écoulée, alors l'âge des individus a augmenté en passant de $a$ à $a+h$. D'où la variation de la population sur $[t,t+h]$
 \begin{equation*}
     x(a+h,t+h) = x(a,t) - \text{décès}
 \end{equation*}
@@ -222,7 +222,7 @@ Ce qui donne \textcolor{astral}{\textit{l'équation de McKendrick-Lotka}}
 \begin{equation}\label{eq_McKendrick_Lotka}
     \partial_a x(a,t) + \partial_tx(a,t) = -\mu(a)x(a,t)
 \end{equation}
-En ajoutant une donnée initiale, représentant la nombre d'individu d'âge $a$ à l'instant $t=0$, $x_0(a)$ et la condition au bord donnant le nombre de nouveau né à l'instant $t \in \bbR_+^*$, on obtient le \textcolor{astral}{\textit{modèle de McKendrick - Lotka}}
+En ajoutant une donnée initiale, représentant la nombre d'individu d'âge $a$ à l'instant $t=0$, $x_0(a)$ et la condition au bord donnant le nombre de nouveau né à l'instant $t \in \bbR_+^*$, on obtient le \textcolor{astral}{\textit{modèle de McKendrick-Lotka}}
 \begin{equation}\label{modele_McKendrick_Lotka}
     \left\{\begin{array}{l}
         \partial_a x(a,t) + \partial_t x(a,t) = -\mu(a)x(a,t) \\

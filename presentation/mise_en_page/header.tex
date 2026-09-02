@@ -1,0 +1,92 @@
+% --- PACKAGES --- %
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[toc, page]{appendix}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{tkz-tab}
+\usepackage{dsfont}
+
+% --- MISE EN PAGES --- %
+% itemize avec des points
+\setlist[itemize,1]{label={\color{black}\small \textbullet}} 
+% permet de numéroter les équations en fonction de la section
+\numberwithin{equation}{section}
+% pour supprimer l'alinéa
+\onehalfspacing
+
+% --- QUELQUES COMMANDES --- %
+% Ensembles R et N
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+% Lettres
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calE}{\mathcal{E}}
+
+\newcommand{\scrC}{\mathscr{C}}
+\newcommand{\scrS}{\mathscr{S}}
+\newcommand{\scrA}{\mathscr{A}}
+
+% Commandes maths
+% fonctions vectorielles en gras
+\usepackage{bm}
+\newcommand{\bfm}[1]{\bm{\mathrm{#1}}}
+% divergence
+\newcommand{\Div}{\mathrm{div}}
+% produit scalaire
+\newcommand{\ps}[2]{\langle #1, #2 \rangle}
+% norme
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+% Commande norme triple
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert
+    \kern-0.25ex\left\vert #1 
+\right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+% valeur absolue
+\newcommand{\abs}[1]{\displaystyle\left\lvert #1 \right\rvert}
+% exponentielle
+\newcommand{\ex}{\mathrm{e}}
+% H^1_0(Omega)
+\newcommand{\Hone}[1][\Omega]{H^1_0(#1)}
+% D(Omega)
+\newcommand{\scrD}{\mathscr{D}(\Omega)}
+% opérateurs
+\newcommand{\operateurs}{M^{-1}_0 L_0}
+% limite
+\newcommand{\limm}{\underset{h \rightarrow0}{\lim} \ \dfrac{1}{h}}
+% ensemble des fonctions à croissances au plus polynomiales
+\newcommand{\scrCinfp}{\scrC^{\infty}_p}
+% d droit
+\renewcommand{\d}{\mathrm{d}}
+% L^1_{loc}
+\newcommand{\Lloc}[1]{L^1_{\text{loc}}\big(#1\big)}
+
+% --- NUMEROTATION THEOREMES --- % 
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remarque}[section]
+
+% --- DEFINITION DE COULEURS --- %
+\definecolor{astral}{RGB}{46,116,181}

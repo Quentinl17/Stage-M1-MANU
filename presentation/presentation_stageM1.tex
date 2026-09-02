@@ -1,0 +1,101 @@
+\documentclass[10pt,svgnames,fragile]{beamer}
+
+\input{mise_en_page/header.tex}
+
+\usepackage{etex}
+\usepackage[normalem]{ulem}
+\usepackage{textcomp}
+\usepackage{pdflscape}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{qtree}
+\usepackage{bussproofs}
+\usepackage{proof}
+\usepackage{fitch}
+\usepackage{cancel}
+\usepackage{url}
+\usepackage{smfthm}
+
+
+\AtBeginSection[]{
+  \begin{frame}
+    \footnotesize\tableofcontents[sectionstyle=show/shaded, subsectionstyle=show/show/shaded]
+  \end{frame}
+}
+
+\AtBeginSubsection[]{
+  \begin{frame}
+    \footnotesize\tableofcontents[sectionstyle=show/shaded, subsectionstyle=show/shaded/shaded]
+  \end{frame}
+}
+
+\subtitle{}
+
+\titlegraphic{\includegraphics[height=2.5cm]{images/logo_um.png} \hspace{1cm} \includegraphics[height=2cm]{images/logo_dpt_maths.png}}
+
+\institute[]{} \usetheme{CambridgeUS}
+\usepackage{beamer_udl_theme}
+\setbeamertemplate{navigation symbols}{%
+	%insertslidenavigationsymbol%
+	%insertframenavigationsymbol%
+	%insertsubsectionnavigationsymbol%
+	%insertsectionnavigationsymbol%
+	%insertdocnavigationsymbol%
+	%insertbackfindforwardnavigationsymbol%
+}
+
+\setbeamertemplate{section in toc}{%
+  \inserttocsectionnumber.~\inserttocsection
+}
+\setbeamertemplate{subsection in toc}{%
+  \hspace{1.5em}\inserttocsectionnumber.\inserttocsubsectionnumber~\inserttocsubsection\par
+}
+
+\usetheme{default}
+\author{Quentin LAHAYE}
+\date{}
+\title{Autour de l'équation de McKendrick-Lotka}
+
+\begin{document}
+
+\maketitle
+
+\input{src/intro.tex}
+
+\footnotesize\tableofcontents
+
+\section{Le modèle et sa dérivation}
+\input{src/modele.tex}
+
+\section{Résolution par la méthode des caractéristiques}
+\input{src/caracteristiques.tex}
+
+%\begin{frame}[label={sec:org9c62e72}]{}
+%\begin{block}{Titre et texte encadré}
+%Du texte et encore du texte\ldots{} 
+%\end{block}
+%\end{frame}
+
+\section{Résolution avec les semi-groupes}
+\input{src/semigroupes.tex}
+
+%\begin{frame}[label={sec:org88fd8be}]{Avec un titre plus imposant}
+%Du texte non encadré \pause 
+%\begin{block}{Un sous-titre}
+%Du texte et une référence bibliographique au sujet de, par exemple, Quine.
+%\end{block}
+%\end{frame}
+
+\section{Modèle non-linéaire}
+\input{src/modele_non_lineaire.tex}
+
+%\section{Approximation par la méthode Galerkin discontinu}
+%\input{src/analyseDG.tex}
+
+\begin{frame}
+    \begin{center}
+        \Large Merci pour votre écoute !
+    \end{center}
+\end{frame}
+
+\end{document}
