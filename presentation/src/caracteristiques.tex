@@ -4,5 +4,148 @@
 
 \subsection{Méthode des caractéristiques}
 \begin{frame}
-    
+    \begin{itemize}
+        \item Soit $a(X,t)$ la courbe caractéristique issue de $X \in \bbR$ fixé. La variation temporelle de $x$ le long de cette courbe s'écrit 
+        \begin{eqnarray*}
+            \frac{d}{d t}x\big(a(X,t),t\big) = \frac{\partial a}{\partial t}(X,t)\frac{\partial x}{\partial a}\big(a(X,t),t\big)+\frac{\partial x}{\partial t}\big(a(X,t),t \big)
+        \end{eqnarray*} \pause
+        \item En posant $\dfrac{\partial a}{\partial t}(X,t) \equiv 1$ on obtient 
+        \begin{eqnarray*}
+            \frac{d}{d t}x\big(a(X,t),t\big) = \frac{\partial x}{\partial a}\big(a(X,t),t\big)+\frac{\partial x}{\partial t}\big(a(X,t),t \big) = -\mu\big(a(X,t)\big)x\big(a(X,t),t\big)
+        \end{eqnarray*} \pause
+        \item Déterminons $a$, on a 
+        \begin{eqnarray*}
+            \frac{\partial a}{\partial t}(X,t) \equiv 1 &\Longrightarrow& a(X,t) = t + a(X,0)
+        \end{eqnarray*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}[!ht]
+        \centering
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{images/caracteristiques/caracteristiques1.png}
+            \caption{Avec condition au bord}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{images/caracteristiques/caracteristiques2.png}
+            \caption{Sans condition au bord}
+        \end{subfigure}
+        \caption{Caractéristiques dans le demi-plan $(a,t)$ avec et sans condition au bord}
+        \label{fig:caracteristiques}
+    \end{figure} \pause
+    \begin{itemize}
+        \item Finalement, pour tout $X \in \bbR$
+        \begin{eqnarray*}
+            a(X,t) = t+X &\Longrightarrow& X = a-t
+        \end{eqnarray*}
+        et on a les conditions $t \in \bbR_+$ si $X \geq 0$ et $t \in [-X,+\infty[$ si $X<0$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item La solution générale est
+        \begin{equation*}
+            x\big(a(X,t),t\big) = x\big(a(X,t_0),t_0\big)\exp\bigg(-\int_{t_0}^t\mu\big(a(X,s)\big)d s\bigg)
+        \end{equation*}
+        où $t_0 \in \bbR$ est le temps de départ de la caracteristique. \pause
+        \item Si $t_0=0$, on a $X \geq 0$ donc $a \geq t$. La solution est alors donnée par 
+        \begin{eqnarray*}
+            x(a,t) = x_0(a-t)\exp\bigg(-\int_{0}^t\mu(a-t+s)d s\bigg)
+        \end{eqnarray*} \pause
+        \item Si $t_0=-X$, on a $X<0$ et donc $a<t$. La solution est alors donnée par 
+        \begin{eqnarray*}
+            x(a,t) = x(0,t-a)\exp\bigg(-\int_{t-a}^t\mu(a-t+s)d s\bigg)
+        \end{eqnarray*} \pause
+        \item La solution obtenue par la méthode des caractéristiques est donc
+        \begin{equation*}
+            x(a,t) = \left\{\begin{array}{lc}
+                x_0(a - t)\dfrac{\Pi(a)}{\Pi(a-t)} & \text{ si } a \geq t, \\
+                & \\
+                B(t-a)\Pi(a) & \text{ si } a < t.
+            \end{array}\right.
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\subsection{L'équation de renouvellement en démographie}
+\begin{frame}
+    \begin{itemize}
+        \item On peut réinjecter son expression dans la condition au bord. On obtient
+        \begin{eqnarray*}
+            B(t) &=& \int_0^{a_{\max}} \beta(a)x(a,t)d a \\
+            &=& \int_0^t\beta(a)B(t-a)\Pi(a)d a + \int_t^{a_{\max}} \beta(a)x_0(a-t)\frac{\Pi(a)}{\Pi(a-t)}d a \\
+            &=& \int_0^t K(a)B(t-a)d a + \underbrace{\int_0^{a_{\max}} \beta(a+t)x_0(a)\frac{\Pi(a+t)}{\Pi(a)}d a}_{=:F(t)}
+        \end{eqnarray*} \pause
+        \item Finalement, on obtient \textcolor{astral}{\textit{l'équation de renouvellement}}
+        \begin{equation*}
+            B(t) = F(t)+\int_0^tK(a)B(t-a)d a
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{theoreme}
+        L'équation de renouvellement admet une unique solution continue $B$ qui satisfait 
+        \begin{equation*}
+            \forall t \in \bbR_+, \ 0 \leq B(t) \leq \beta_+\ex^{\beta_+ t}\|x_0\|_{L^1}
+        \end{equation*}
+    \end{theoreme}
+    \pause
+    \begin{theoreme}
+        Si $B$ est solution de l'équation de renouvellement alors $x$ définie par la méthode des caractéristiques est l'unique solution du modèle de McKendrick-Lotka. De plus, $x$ est continue sur $[0,a_{\max}] \times \bbR_+$ avec $a<t$. Enfin, pour $(a,t) \in [0,a_{\max}] \times \bbR_+$ on a $x(a,t) \geq 0$,
+        \begin{equation*}
+            x \in \scrC^0\big([0,T], L^1(0,a_{\max})\big)
+        \end{equation*}
+        et l'estimation
+        \begin{equation*}
+            \|x(t)\|_{L^1} \leq \ex^{\beta_+t}\|x_0\|_{L^1}
+        \end{equation*}
+    \end{theoreme}
+\end{frame}
+
+\subsection{Comportement asymptotique}
+\begin{frame}
+    \begin{itemize}
+        \item On va réécrire l'équation de renouvellement sous forme de convolution
+        \begin{equation*}
+            B(t) = F(t) + (K*B)(t)
+        \end{equation*} \pause
+        \item Puis on applique la transformée de Laplace à celle-ci, ce qui donne 
+        \begin{equation*}
+            \hat{B}(z) = \hat{F}(z) + \hat{K}(z)\hat{B}(z)
+        \end{equation*} \pause
+        \item Par les propriétés de la transformée de Laplace, $\hat{K}$ et $\hat{F}$ sont analytiques donc les propriétés de $\hat{B}$ découlent du nombre de zéros de $1-\hat{K}$, autrement dit il nous faut résoudre l'équation suivante dans $\bbC$
+        \begin{equation*}
+            \hat{K}(z) = 1
+        \end{equation*} \pause
+        \item On considère la fonction réelle
+        \begin{equation*}
+            \hat{K}(x) = \int_0^{+\infty} \ex^{-xs}K(s)d s
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item La fonction réelle $\hat{K}$ est strictement décroissante et vérifie 
+        \begin{eqnarray*}
+            \lim_{x \to -\infty} \hat{K}(x) = +\infty \ \ \ &\text{ et }& \ \ \ \lim_{x \to +\infty} \hat{K}(x) = 0
+        \end{eqnarray*}
+        Par le TVI, il existe un unique $\alpha^* \in \bbR$ tel que $\hat{K}(\alpha^*) = 1$. \pause
+        \item Et par stricte décroissance de $\hat{K}$ que 
+        \begin{eqnarray*}
+            \alpha^* >0 &\iff& \hat{K}(\alpha^*) = 1 < \hat{K}(0) = R \\
+            \alpha^* < 0 &\iff& \hat{K}(\alpha^*) = 1 > \hat{K}(0)=R
+        \end{eqnarray*} \pause
+        \item Toute solution de l'équation $\hat{K}(z)=1$ admet une partie réelle strictement plus petite que $\alpha^*$. \pause
+        \item On a $B(t) = B_0\ex^{\alpha^*t}\big(1+\Omega(t)\big)$ avec $B_0 \geq 0$ et $\displaystyle{\lim_{t \to +\infty}} \Omega(t)=0$. \pause On injecte dans la solution du modèle de McKendrick-Lotka et on obtient 
+        \begin{equation*}
+            \lim_{t \to +\infty} x(a,t) = \lim_{t \to +\infty} B_0\ex^{\alpha^*(t-a)}\Pi(a)
+        \end{equation*}
+    \end{itemize}
 \end{frame}

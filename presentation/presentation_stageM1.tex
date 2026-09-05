@@ -2,6 +2,7 @@
 
 \input{mise_en_page/header.tex}
 
+\usepackage[french]{babel}
 \usepackage{etex}
 \usepackage[normalem]{ulem}
 \usepackage{textcomp}
@@ -15,6 +16,11 @@
 \usepackage{cancel}
 \usepackage{url}
 \usepackage{smfthm}
+
+\addto\captionsfrench{%
+    \def\theoremname{Théorème}%
+    \def\proofname{Démonstration}%
+}
 
 
 \AtBeginSection[]{

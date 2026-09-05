@@ -1,3 +1,184 @@
+% ======================================
+% Résolution avec les semi-groupes
+% ======================================
+
+\subsection{La théorie des semi-groupes}
+\begin{frame}
+    Soit $X$ un espace de Banach.
+    \begin{definition}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ une famille d'opérateurs bornés de $X$ dans $X$, parametrée par un réel positif $t$. On dit que la famille $\big\{T(t)\big\}_{t \geq 0}$ est un \textcolor{astral}{semi-groupe d'opérateurs bornés sur $X$} si 
+        \begin{itemize}
+            \item[$(i)$] $T(0)=I$,
+            \item[$(ii)$] $T(t+s)=T(t)T(s)$ pour tout $t,s \in \bbR_+$ (propriété des semi-groupes). 
+        \end{itemize}
+    \end{definition}
+    \pause
+    \begin{definition}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ un semi-groupe d'opérateurs bornés. L'opérateur $A$ défini par 
+        \begin{equation*}
+            D(A) = \Big\{ x \in X \ \ | \ \ \lim_{h \to 0} \frac{T(h)x-x}{h} \ \text{ existe } \Big\}
+        \end{equation*}
+        et pour $x \in D(A)$
+        \begin{equation*}
+            Ax = \lim_{h \to 0} \frac{T(h)x-x}{h}
+        \end{equation*}
+        est le \textcolor{astral}{générateur infinitésimal du semi-groupe $\big\{T(t)\big\}_{t \geq 0}$}, et $D(A)$ est le domaine de définition de $A$.
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \begin{definition}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ un semi-groupe d'opérateurs bornés. On dit que le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est \textcolor{astral}{continu au sens fort} si 
+        \begin{equation*}
+            \forall x \in X, \ \lim_{t \to 0} T(t)x=x
+        \end{equation*}
+        On dit que le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est un \textcolor{astral}{$\scrC^0$ semi-groupe}.
+    \end{definition}
+    \pause
+    \begin{theoreme}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe. Alors il existe $\omega \geq 0$ et $M \geq 1$ tels que 
+        \begin{equation*}
+            \forall t \in \bbR_+, \ \vertiii{T(t)} \leq M\ex^{\omega t}
+        \end{equation*}
+    \end{theoreme}
+    \pause
+    \begin{definition}
+        Soit $A$ un opérateur de $X$ dans $X$. 
+        \begin{itemize}
+            \item On appelle \textcolor{astral}{ensemble resolvant de $A$}, l'ensemble $\rho(A)$ des $\lambda \in \bbC$ tels que $\lambda I-A$ est inversible, \textit{i.e.} $(\lambda I-A)^{-1}$ est un opérateur borné de $X$.
+            \item La famille $R(\lambda : A):=(\lambda I-A)^{-1}$, où $\lambda \in \rho(A)$, est appelée la \textcolor{astral}{résolvante de $A$}.
+        \end{itemize}
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \begin{theorem}[Hille-Yosida]
+        Un opérateur $A$ est le générateur infinitésimal d'un $\scrC^0$ semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ satisfaisant pour tout $t \in \bbR_+$, $\vertiii{T(t)} \leq \ex^{\omega t}$ si et seulement si 
+        \begin{itemize}
+            \item[$(i)$] $A$ est fermé et $\overline{D(A)}=X$,
+            \item[$(ii)$] $\{\lambda \in \bbC \ | \ \Im(\lambda) = 0 \text{ et } \lambda > \omega \} \subset \rho(A)$ et on a pour $\lambda \in \{\lambda \in \bbC \ | \ \Im(\lambda) = 0 \text{ et } \lambda > \omega \}$
+            \begin{equation}\label{eq_H-Y}
+                \forall \lambda >0, \ \vertiii{R(\lambda:A)} \leq \frac{1}{\lambda-\omega}
+            \end{equation} 
+        \end{itemize}
+    \end{theorem}
+\end{frame}
+
+\subsection{Cadre théorique et problème de Cauchy}
+\begin{frame}
+    \begin{itemize}
+        \item On va \og regarder \fg{} notre inconnue $[0,a_{\max}] \times \bbR_+ \ni (a,t) \mapsto x(a,t) \in \bbR_+$ comme une fonction $\bbR_+ \ni t \mapsto \tilde{x}(t)$ à valeurs dans un espace vectoriel de fonctions définies sur $\bbR_+$, c'est-à-dire $[0,a_{\max}] \ni a \mapsto \tilde{x}(t)(a) \in \bbR_+$. \pause
+        \item On considère donc $x : \bbR_+ \rightarrow L^1(0,a_{\max}), \ t \mapsto x(t)$. Et on considère une donnée initiale $x_0 \in L^1(0,a_{\max})$. \pause
+        \item On peut réécrire l'équation de McKendrick-Lotka et ainsi définir un opérateur $A$
+        \begin{equation*}
+            \frac{d}{d t}x(t) = \big(\underbrace{-\mu - \partial_a}_{=:A}\big) x(t)
+        \end{equation*} \pause
+        \item On obtient alors le problème de Cauchy
+        \begin{equation*}
+            \left\{\begin{array}{lr}
+                \dfrac{d}{d t}x(t) = Ax(t) & \ \ \ t >0 \\
+                x(0) = x_0 &
+            \end{array}\right.
+        \end{equation*} \pause
+        \item Il nous faut intégrer la condition au bord du modèle dans le domaine de définition de $A$. Pour ça on pose
+        \begin{equation*}
+            D(A) := \Big\{ u \in L^1(0,a_{\max}) \ \ | \ \ u'+\mu u \in L^1(0,a_{\max}) \ \text{ et } \ u(0) = \int_0^{+\infty}\beta(a)u(a)\d a \Big\}
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\subsection{Application du théorème de Hille-Yosida}
+\begin{frame}
+    \begin{proposition}
+        $A : D(A) \rightarrow L^1(0,a_{\max})$ est un opérateur fermé.
+    \end{proposition}
+    \pause
+    \begin{proposition}
+        $D(A)$ est dense dans $L^1(0,a_{\max})$.
+    \end{proposition}
+    \pause
+    \begin{proposition}
+        On a $]\|\beta\|_{L^{\infty}},+\infty[ \ \subset \rho(A)$ et pour chaque $\lambda$ dans cet ensemble la résolvante de $A$ vérifie
+        \begin{equation*}
+            \vertiii{R(\lambda : A)}_{L^1} \leq \frac{1}{\lambda - \|\beta\|_{L^\infty}}
+        \end{equation*}
+        où $\vertiii{\cdot}_{L^1}$ désigne la norme d'opérateur de $L^1$.
+    \end{proposition}
+    \pause
+    \begin{itemize}
+        \item Les trois propositions précédentes nous assurent que l'opérateur $A$ vérifie les hypothèses du théorème de Hille-Yosida, donc $A$ est le générateur d'un $\scrC^0$ semi-groupe que l'on note $\big\{T(t)\big\}_{t \geq 0}$ vérifiant 
+        \begin{equation*}
+            \forall t \in \bbR_+, \ \vertiii{T(t)}_{L^1} \leq \exp\big({\|\beta\|_{L^\infty}t}\big)
+        \end{equation*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Existence et unicité}
+    \begin{theorem}
+        Le problème de Cauchy de McKendrick-Lotka admet une unique solution $x \in \scrC^0\big(\bbR_+, L^1(0,a_{\max})\big)$.
+    \end{theorem}
+    \pause
+    \begin{itemize}
+        \item \textbf{Existence et unicité dans $D(A)$.}\pause
+        \begin{itemize}
+            \item[$\triangleright$] Soit $x_0 \in D(A)$. On pose alors pour tout $t \in \bbR_+$
+            \begin{equation*}
+                \forall t \in \bbR_+, \ x(t) = T(t)x_0 \in D(A)
+            \end{equation*}\pause
+            \item[$\triangleright$] Alors avec les propriétés des semi-groupes, on obtient 
+            \begin{eqnarray*}
+                \frac{d}{d t}x(t) = AT(t)x_0 = Ax(t)
+            \end{eqnarray*}\pause
+            \item[$\triangleright$] On considère une autre solution $v$ du problème de Cauchy et on pose pour $t \in \bbR_+$ fixé
+            \begin{equation*}
+                \forall s \in \bbR_+, \ w(s) = T(t-s)v(s)
+            \end{equation*}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Existence et unicité}
+    \begin{itemize}
+        \item \textbf{Existence et unicité dans $L^1(0,a_{\max})$.}\pause
+        \begin{itemize}
+            \item[$\triangleright$] Soit maintenant $x_0 \in L^1(0,a_{\max})$. Par densité de $D(A)$ dans $L^1(0,a_{\max})$, il existe $(y_n)_{n \in \bbN} \subset D(A)$ telle que $y_n \overset{L^1}{\underset{n \to +\infty}{\longrightarrow}} x_0$. \pause
+            \item[$\triangleright$] On a le problème de Cauchy suivant pour tout $n \in \bbN$
+            \begin{equation*}
+                \left\{\begin{array}{l}
+                    \dfrac{d}{d t}x_n(t) = Ax_n(t) \ \ \ \ \ t>0 \\
+                    x_n(0)=y_n
+                \end{array}\right.
+            \end{equation*} \pause
+            \item[$\triangleright$] Par le raisonnement précédent, ce problème admet une unique solution pour tout $n \in \bbN$, cette solution est donnée par 
+            \begin{equation*}
+                \forall t \in \bbR_+, \ x_n(t) = T(t)y_n
+            \end{equation*}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Existence et unicité}
+    \begin{itemize}
+        \item \textbf{Existence et unicité dans $L^1(0,a_{\max})$.}
+        \begin{itemize}
+            \item[$\triangleright$] La suite $\big(x_n(t)\big)_{n \in \bbN}$ est de Cauchy dans $L^1(0,a_{\max})$ qui est complet, donc elle converge vers un élément $x^*(t)$. \pause
+            \item[$\triangleright$] On montre que $x^*(t)=T(t)x_0$. \pause
+            \item[$\triangleright$] Pour l'unicité, on utilise une propriété des semi-groupes, si on a 
+            \begin{equation*}
+                \forall \lambda \geq \|\beta\|_{L^\infty}, \ \frac{\ln\|R(\lambda:A)\|}{\lambda} \leq 0
+            \end{equation*}
+            alors il existe au plus une solution. \pause
+        \end{itemize}
+        \item \textbf{Continuité de la solution.} On utilise une généralisation du théorème d'explosion en temps fini pour les semi-groupes.
+    \end{itemize}
+\end{frame}
+
+\subsection{Identification du semi-groupe}
+\begin{frame}
+    
+\end{frame}
+
+\subsection{Comportement asymptotique}
 \begin{frame}
     
 \end{frame}
