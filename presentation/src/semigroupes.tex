@@ -175,10 +175,116 @@
 
 \subsection{Identification du semi-groupe}
 \begin{frame}
-    
+    \begin{itemize}
+        \item On a l'expression de la résolvante. Pour tout $\mu \in \ ]\|\beta\|_{L^\infty}, +\infty[$ et 
+        \begin{equation*}
+            R(\mu : A)x = \int_0^{+\infty}\ex^{-\mu t}T(t)x\d t
+        \end{equation*} \pause
+        \item En remplaçant par l'expression de la résolvante dans l'équation précédente et en identifiant, on obtient
+        \begin{equation*}
+            \forall t \in \bbR_+, \ \forall f \in L^1(0,a_{\max}), \ \big(T(t)f\big)(a) := \left\{\begin{array}{cl}\dfrac{\Pi(a)}{\Pi(a-t)}f(a-t) & \text{si } t \leq a, \\
+            & \\
+            \Pi(a)B(t-a) & \text{si } t > a.
+            \end{array}\right.
+        \end{equation*} \pause 
+        \item La dépendance en $f$ dans l'expression de $T(t)$ dans le cas $t>a$ est implicite.
+    \end{itemize}
 \end{frame}
 
 \subsection{Comportement asymptotique}
 \begin{frame}
-    
+    \begin{definition}
+        On définit le \textcolor{astral}{type} de $\big\{T(t)\big\}_{t \geq 0}$ par 
+        \begin{equation*}
+            \omega_0 := \lim_{t \to +\infty}\frac{\ln(\vertiii{T(t)})}{t} = \inf_{t >0}\frac{\ln(\vertiii{T(t)})}{t}
+        \end{equation*}
+    \end{definition}
+    \pause
+    \begin{definition}
+        On définit le \textcolor{astral}{type essentiel} de $\big\{T(t)\big\}_{t \geq 0}$ par 
+        \begin{equation*}
+            \omega_{\text{ess}} := \lim_{t \to +\infty}\frac{\ln(|T(t)|_{\alpha})}{t} = \inf_{t >0}\frac{\ln(|T(t)|_\alpha)}{t}
+        \end{equation*}
+        où $|\cdot|_{\alpha}$ est la mesure de non-compacité.
+    \end{definition}
+    \pause
+    \begin{definition}
+        On définit la \textcolor{astral}{borne spectrale de $A$} par 
+        \begin{equation*}
+            s(A):= \sup\{\Re (\lambda) \in \bbR \ \ | \ \ \lambda \in \sigma(A)\}
+        \end{equation*}
+        avec $s(A)=-\infty$ si le spectre de $A$ est vide.
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \begin{definition}
+        Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est \textcolor{astral}{positif} si pour tout $t \geq 0$ 
+        \begin{equation*}
+            T(t)X^+ \subset X^+
+        \end{equation*}
+        où $X^+$ désigne le cône positif de $X$.
+    \end{definition}
+    \pause
+    \begin{definition}
+        On dit que le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est \textcolor{astral}{irréductible} si $\{0\}$ et $X$ sont les seuls idéaux fermés $\big\{T(t)\big\}_{t \geq 0}$ invariant.
+    \end{definition}
+    \pause
+    \begin{theorem}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe positif tel que $\omega_{\text{ess}} < \omega_0$. Alors 
+        \begin{itemize}
+            \item $\sigma_+(A)=\{s(A)\}$ et il existe $\varepsilon >0$ tel que 
+            \begin{eqnarray*}
+                \omega_{\text{ess}} \leq s(A)-\varepsilon \ \ \ &\text{ et }& \ \ \ \forall \lambda \in \sigma(A) \setminus \{s(A)\}, \ \Re(\lambda) \leq s(A)- \varepsilon
+            \end{eqnarray*}
+            \item De plus, si $\big\{T(t)\big\}_{t \geq 0}$ est irréductible alors $s(A)$ est un pôle d'ordre $1$ de $R(\lambda :A)$ de multiplicité géométrique $1$.
+        \end{itemize}
+    \end{theorem}
+\end{frame}
+
+\begin{frame}
+    \begin{theorem}
+        Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe positif tel que $\omega_{\text{ess}} < \omega_0$. Soit $\varepsilon >0$ donné par le théorème précédent. Si $\big\{T(t)\big\}_{t \geq 0}$ est irréductible et on a $x \in X^+$ et $x^* \in (X')^+$ tels que 
+        \begin{equation*}
+            \begin{array}{ccccc}
+                Ax = s(A)x && A^*x^* = s(A)x^* && \langle x,x^*\rangle =1
+            \end{array}
+        \end{equation*}
+        alors pour tout $\eta \in \ ]0,\varepsilon[$ et pour tout $x_0 \in X$, il existe une constante $M_\eta \geq 1$ telle que 
+        \begin{equation*}
+            \|\ex^{-s(A)t}T(t)x - \langle x,x_0^*\rangle x_0\| \leq M_\eta \ex^{-\eta t}\|x\|
+        \end{equation*}
+    \end{theorem}
+    \pause
+    Dans notre cas, on a 
+    \begin{itemize}
+        \item $\omega_{\text{ess}}=-\infty$ et $\omega_0 = s(A) = \alpha^*$ \pause
+        \item $x(a) = x(0)\ex^{-\alpha^*a}\Pi(a)$ \pause
+        \item $A^*v = -\mu v + v' + \beta v(0)$ \pause
+        \item $x^*(a) = x^*(0)\dfrac{\ex^{\alpha^*a}}{\Pi(a)}\Big(1-\displaystyle{\int_0^a}\ex^{-\alpha^*s}K(s)d s\Big)$ \pause 
+        \item Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $x^*(0)$ satisfaisant l'équation.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{definition}
+        On considère l'ouvert $\omega \subset \ ]0,a_{\max}[$ constitué des points au voisinage desquels $\beta=0$ presque partout. On définit alors le \textcolor{astral}{support essentiel} de $\beta$ par 
+        \begin{equation*}
+            \mathrm{Supp}_{\text{ess}}(\beta)=\ ]0,a_{\max}[ \ \setminus \omega
+        \end{equation*}
+        et on pose 
+        \begin{equation*}
+            \overline{\beta} := \sup \mathrm{Supp}_{\text{ess}}(\beta)
+        \end{equation*}
+    \end{definition}
+    \pause
+    \begin{proposition}
+        Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est irréductible si et seulement si $\overline{\beta}=a_{\max}$.
+    \end{proposition}
+    \pause
+    Donc on a par le théorème
+    \begin{equation*}
+        \lim_{t \to +\infty} \big(T(t)x_0\big)(a) = \lim_{t \to +\infty} \ex^{\alpha^*(t-a)}\Pi(a)\langle x_0,x^*\rangle
+    \end{equation*}
+    on retrouve bien les résultats obtenus dans la section de résolution par la méthode des caractéristiques.
 \end{frame}

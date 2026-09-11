@@ -17,11 +17,6 @@
 \usepackage{url}
 \usepackage{smfthm}
 
-\addto\captionsfrench{%
-    \def\theoremname{Théorème}%
-    \def\proofname{Démonstration}%
-}
-
 
 \AtBeginSection[]{
   \begin{frame}
@@ -51,10 +46,10 @@
 }
 
 \setbeamertemplate{section in toc}{%
-  \inserttocsectionnumber.~\inserttocsection
+    \scriptsize\inserttocsectionnumber.~\inserttocsection\par
 }
 \setbeamertemplate{subsection in toc}{%
-  \hspace{1.5em}\inserttocsectionnumber.\inserttocsubsectionnumber~\inserttocsubsection\par
+    \scriptsize\hspace{1.5em}\inserttocsectionnumber.\inserttocsubsectionnumber~\inserttocsubsection\par
 }
 
 \usetheme{default}
@@ -66,9 +61,13 @@
 
 \maketitle
 
+\footnotesize
+
 \input{src/intro.tex}
 
-\footnotesize\tableofcontents
+\scriptsize\tableofcontents
+
+\footnotesize
 
 \section{Le modèle et sa dérivation}
 \input{src/modele.tex}

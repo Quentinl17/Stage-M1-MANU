@@ -548,7 +548,7 @@ On considère l'ouvert $\omega \subset \ ]0,a_{\max}[$ constitué des points au 
     donc $R(\lambda : A)x$ est un point quasi-intérieur et $R(\lambda : A)$ est fortement irréductible. Donc par la proposition \ref{SG_irréductible}, $\big\{T(t)\big\}_{t \geq 0}$ est irréductible.
 \end{proof}
 
-Dans la suite, on supposera donc $\overline{\beta}=a_{\max}$ afin d'avoir le caractère irréductible du semi-groupe.
+\paragraph{Hypothèse :} on suppose donc $\overline{\beta}=a_{\max}$ afin d'avoir le caractère irréductible du semi-groupe.
 
 \begin{proposition}\label{prop_res_compacte}
     La résolvante $R(\lambda : A)$ est compacte pour $\lambda \in \rho(A)$.
@@ -765,17 +765,17 @@ et $A^*$ est l'adjoint de $A$.
     \end{equation*}
     \item Déterminons $x^*$.
     \begin{eqnarray*}
-        (A^*x^*)(a) = \alpha^*x^*(a) &\Longrightarrow& -\mu(a)v(a)+v'(a)+\beta(a)v(0)=\alpha^*v(a) \\
-        &\Longrightarrow& v'(a) = \alpha^*v(a) - \beta(a)v(0)+\mu(a)v(a) \\
-        &\Longrightarrow& v(a) = v(0)\frac{\ex^{\alpha^*a}}{\Pi(a)} - v(0)\int_0^a\frac{\ex^{\alpha^*a}}{\Pi(a)}\ex^{-\alpha^* s}\Pi(s)\beta(s)\d s \\
-        &\Longrightarrow& v(a) = v(0)\frac{\ex^{\alpha^*a}}{\Pi(a)}\Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big)
+        (A^*x^*)(a) = \alpha^*x^*(a) &\Longrightarrow& -\mu(a)x^*(a)+(x^*)'(a)+\beta(a)v(0)=\alpha^*x^*(a) \\
+        &\Longrightarrow& (x^*)'(a) = \alpha^*x^*(a) - \beta(a)x^*(0)+\mu(a)x^*(a) \\
+        &\Longrightarrow& x^*(a) = x^*(0)\frac{\ex^{\alpha^*a}}{\Pi(a)} - x^*(0)\int_0^a\frac{\ex^{\alpha^*a}}{\Pi(a)}\ex^{-\alpha^* s}\Pi(s)\beta(s)\d s \\
+        &\Longrightarrow& x^*(a) = x^*(0)\frac{\ex^{\alpha^*a}}{\Pi(a)}\Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big)
     \end{eqnarray*}
 \end{itemize}
-Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $v(0)$ tel que 
+Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $x^*(0)$ tel que 
 \begin{eqnarray*}
     \langle x,x^*\rangle = 1 &\iff& \int_0^{a_{\max}}x(a)x^*(a)\d a \\
-    &\iff& v(0)\int_0^{a_{\max}} \Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big) \d a = 1 \\
-    &\iff& v(0) = \frac{1}{a_{\max}-\displaystyle{\int_0^{a_{\max}}}\displaystyle{\int_0^a}\ex^{-\alpha^* s}K(s)\d s\d a}
+    &\iff& x^*(0)\int_0^{a_{\max}} \Big(1-\int_0^a\ex^{-\alpha^*s}K(s)\d s\Big) \d a = 1 \\
+    &\iff& x^*(0) = \frac{1}{a_{\max}-\displaystyle{\int_0^{a_{\max}}}\displaystyle{\int_0^a}\ex^{-\alpha^* s}K(s)\d s\d a}
 \end{eqnarray*}
 Donc on a par \eqref{estim_SG}
 \begin{equation*}

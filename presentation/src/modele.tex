@@ -73,7 +73,7 @@
         \end{equation*} \pause
         \item On divise par $h$ et on fait tendre $h$ vers $0$, on obtient alors \textcolor{astral}{\textit{l'équation de McKendrick-Lotka}}
         \begin{equation*}
-            \partial_ax(a,t)+\partial_tx(a,t) = -\mu(a)x(a,t)
+            \partial_tx(a,t)+\partial_ax(a,t) = -\mu(a)x(a,t)
         \end{equation*}
     \end{itemize}
 \end{frame}
@@ -83,7 +83,7 @@
         \item En ajoutant une donnée initiale, représentant la nombre d'individu d'âge $a$ à l'instant $t=0$, $x_0(a)$ et la condition au bord donnant le nombre de nouveau né à l'instant $t \in \bbR_+^*$, on obtient le \textcolor{astral}{\textit{modèle de McKendrick-Lotka}}
         \begin{equation*}
             \left\{\begin{array}{l}
-            \partial_a x(a,t) + \partial_t x(a,t) = -\mu(a)x(a,t) \\
+            \partial_t x(a,t) + \partial_a x(a,t) = -\mu(a)x(a,t) \\
             x(0,t) = B(t) = \displaystyle{\int_0^{a_{\max}}} \beta (a)x(a,t)d a \\
             x(a,0) = x_0(a)
             \end{array}\right.
