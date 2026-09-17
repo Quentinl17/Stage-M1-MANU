@@ -6,7 +6,6 @@
 \begin{frame}
     \begin{itemize}
         \item On commence par étudier le modèle EDO introduit par Pierre François Verhulst qui généralise le modèle de Malthus. \pause
-        \item Le modèle de Verhulst fait l'hypothèse que le taux de natalité et le taux de mortalité sont des fonctions affines respectivement décroissante et croissante de la taille de la population. \pause
         \item En s'inspirant du modèle de Malthus, on obtient l'équation 
         \begin{equation*}
             P'(t) = \big(\beta(P)-\mu(P)\big)P(t)
@@ -18,32 +17,15 @@
         \item En posant $K=a/b$ la \textcolor{astral}{\textit{capacité d'accueil}}, on obtient la forme \og logistique \fg{} de l'équation 
         \begin{equation*}
             P'(t) = aP(t)\Big(1-\frac{P(t)}{K}\Big)
-        \end{equation*}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \begin{itemize}
-        \item La solution du modèle de Verhulst est donnée par 
-        \begin{equation*}
-            P(t) = K \frac{1}{1+\Big(\dfrac{K}{P(0)}-1\Big)\ex^{-at}}
         \end{equation*} \pause
-        \item On peut montrer que le modèle de Verhulst admet deux points d'équilibres : $0$ et $K$. \pause
-        \item On étudie la stabilité de ces points d'équilibres. \pause
-        \item $0$ est stable mais n'est pas localement asymptotiquement stable. \pause
-        \item $K$ est stable et localement asymptotiquement stable.
+        \item On peut montrer que le modèle de Verhulst admet deux points d'équilibres : $0$ et $K$. Et, $K$ est localement asymptotiquement stable.
     \end{itemize}
 \end{frame}
 
 \subsection{Modèle de McKendrick-Lotka non-linéaire}
 \begin{frame}
     \begin{itemize}
-        \item On pourrait considérer l'équation 
-        \begin{equation*}
-            \partial_tx(a,t)+\partial_ax(a,t) = -\mu(a)x(a,t)-\gamma(a)x(a,t)^2
-        \end{equation*}
-        où $\gamma \in L^\infty(0,a_{\max})$ et $\gamma > 0$, cette fonction peut représenter un terme de compétition inter-population (pour les ressources par exemple). \pause
-        \item On va plutôt considérer l'équation 
+        \item On va considérer l'équation 
         \begin{equation*}
             \partial_t x(a,t) + \partial_a x(a,t) = -\mu(a)x(a,t)-\gamma(a)\|x(\cdot,t)\|_{L^1}x(a,t)
         \end{equation*} \pause
@@ -54,30 +36,15 @@
                 x(0,t) = B(t) = \displaystyle{\int_0^{a_{\max}}} \beta (a)x(a,t)d a \\
                 x(a,0) = x_0(a)
             \end{array}\right.
-        \end{equation*}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \begin{itemize}
-        \item Comme dans la section précédente, on considère $x: \bbR_+ \rightarrow L^1(0,a_{\max})$ et l'opérateur $A$. Et donc on a 
+        \end{equation*} \pause
+        \item Comme dans la section précédente, on considère $x: \bbR_+ \rightarrow L^1(0,a_{\max})$ et l'opérateur $A$.
         \begin{equation*}
             \left\{\begin{array}{l}
                 \dfrac{d}{d t}x(t) = Ax(t) -\gamma\|x(t)\|_{L^1}x(t) \\
                 x(0) = x_0
             \end{array}\right.
         \end{equation*}\pause
-        \item On pose alors 
-        \begin{eqnarray*}
-            f : L^1(0,a_{\max}) \rightarrow L^1(0,a_{\max}), \ u \mapsto - \gamma \|u\|_{L^1}u
-        \end{eqnarray*}
-        de sorte à obtenir le problème 
-        \begin{equation*}
-            \left\{\begin{array}{l}
-                \dfrac{d}{d t}x(t) = Ax(t) + f\big(t,x(t)\big) \\
-                x(0) = x_0
-            \end{array}\right.
-        \end{equation*}
+        \item On pose $f : L^1(0,a_{\max}) \rightarrow L^1(0,a_{\max}), \ u \mapsto - \gamma \|u\|_{L^1}u$.
     \end{itemize}
 \end{frame}
 
@@ -106,13 +73,9 @@
     \end{theorem}
 \end{frame}
 
-\begin{frame}{Points d'équilibres}
+\begin{frame}
     \begin{itemize}
-        \item Déterminer les points d'équilibres revient à chercher une solution $x_0 \in D(A)$ de notre EDP qui ne dépend pas du temps. \pause
-        \item En injectant $x_0$ dans l'EDP non-linéaire, on obtient 
-        \begin{equation*}
-            Ax_0+f(x_0) = 0
-        \end{equation*} \pause
+        \item Déterminer les points d'équilibres revient à chercher une solution $x_0 \in D(A)$ de notre EDP qui ne dépend pas du temps. Donc résoudre $Ax_0+f(x_0) = 0$.\pause
         \item La solution de cette EDO est donnée par 
         \begin{equation*}
             x_0(a) = x_0(0)\Pi(a)\exp\bigg(-\|x_0\|_{L^1}\int_0^a\gamma(\sigma)d \sigma\bigg)
@@ -121,24 +84,7 @@
         \begin{equation*}
             x_0(0)\bigg(1-\int_0^{a_{\max}}K(a)\exp\bigg(-\|x_0\|_{L^1}\int_0^a \gamma(\sigma)d \sigma\bigg)d a\bigg) = 0
         \end{equation*}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Points d'équilibres}
-    \begin{itemize}
         \item Si $x_0(0)=0$, alors $x_0\equiv 0$ et donc le seul point d'équilibre est $0$. \pause
-        \item Sinon, on a 
-        \begin{equation*}
-            \int_0^{a_{\max}}K(a)\exp\bigg(-\|x_0\|_{L^1}\int_0^a\gamma(\sigma)\d \sigma\bigg)\d a = 1
-        \end{equation*} \pause
-        \item On étudie la fonction 
-        \begin{equation*}
-            g : \bbR_+ \rightarrow \bbR, \ y \mapsto \int_0^{a_{\max}}K(a)\exp\bigg(-y\int_0^a\gamma(\sigma)\d \sigma\bigg)\d a
-        \end{equation*} \pause
-        \item $g$ est positive, continue, strictement décroissante et vérifie 
-        \begin{eqnarray*}
-            g(0) = \int_0^{a_{\max}}K(a)\d a = R \ \ \ &\text{ et }& \ \ \ \lim_{y \to +\infty}g(y) = 0
-        \end{eqnarray*} \pause
         \item Si $R\leq1$, alors il n'y a pas de point d'équilibre non-trivial. Si $R > 1$ alors, on a par le TVI l'existence d'une unique solution $y^*\geq 0$ à l'équation et donc d'un unique point d'équilibre vérifiant
         $\|x_0\|_{L^1}=y^*$.
     \end{itemize}
@@ -161,7 +107,7 @@
     \end{proposition}
 \end{frame}
 
-\begin{frame}{Stabilité}
+\begin{frame}
     \begin{itemize}
         \item On considère à présent l'opérateur $\hat{A} := A + f'(x_0)$.
     \end{itemize}
@@ -186,23 +132,19 @@
     \end{theorem}
 \end{frame}
 
-\begin{frame}{Stabilité}
+\begin{frame}
     \begin{itemize}
-        \item On rappelle que, dans l'étude asymptotique du modèle linéaire, on a obtenu les équivalences suivantes 
+        \item On rappelle que, dans l'étude asymptotique du modèle linéaire, on a obtenu
         \begin{align*}
             \alpha^* < 0 \iff R < 1 & \quad & \alpha^* > 0 \iff R > 1 & \quad & \alpha^*=0 \iff R=1
         \end{align*} \pause
         \item Si $R<1$, alors $0$ est le seul point d'équilibre. De plus, on a $\alpha^*<0$ et notre opérateur est $\hat{A}=A+f'(0)=A$, donc $s(A) <0$ et $0$ est localement exponentiellement asymptotiquement stable. \pause
-        \item Si $R=1$, alors $0$ est le seul point d'équilibre. De plus, on a $\alpha^*=0$ et notre opérateur est $\hat{A}=A+f'(0)=A$, donc $s(\hat{A})=s(A) =0$. On ne peut donc pas conclure sur la stabilité du point d'équilibre. \pause
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Stabilité}
-    \begin{itemize}
-        \item Si $R>1$, alors on a deux points d'équilibre : $0$ et $x_0$. On a aussi $\alpha^*>0$ et notre opérateur est $\hat{A}=A+f'(0)=A$, donc $s(\hat{A})=s(A) >0$ par la proposition, donc $0$ est instable. \pause
-        \item Pour $x_0$, qui est un point d'équilibre non-trivial, notre opérateur est $\hat{A}=A+f'(x_0)$ et $\alpha^*>0$. \pause
-        \item Si $0 < \lambda^* \leq \alpha^*$ alors $x_0$ est instable. \pause
-        \item Si $\lambda^*=0$ alors on ne peut pas conclure sur la stabilité de $x_0$. \pause
-        \item Si $\lambda^* < 0$ alors $x_0$ est localement exponentiellement asymptotiquement stable.
+        \item Si $R=1$, alors $0$ est le seul point d'équilibre. On a $\alpha^*=0$ et $\hat{A}=A$, donc $s(\hat{A})=s(A) =0$. On ne peut donc pas conclure sur la stabilité du point d'équilibre.
+        \item Si $R>1$, alors on a deux points d'équilibre : $0$ et $x_0$. De plus, $\alpha^*>0$. Pour $0$, $\hat{A}=A$, donc $s(\hat{A})=s(A) >0$ par la proposition, donc $0$ est instable. \pause Pour $x_0$, $\hat{A}=A+f'(x_0)$ et
+        \begin{itemize}
+            \item[$\triangleright$] Si $0 < \lambda^* \leq \alpha^*$ alors $x_0$ est instable.
+            \item[$\triangleright$] Si $\lambda^*=0$ alors on ne peut pas conclure sur la stabilité de $x_0$.
+            \item[$\triangleright$] Si $\lambda^* < 0$ alors $x_0$ est localement exponentiellement asymptotiquement stable.
+        \end{itemize}
     \end{itemize}
 \end{frame}

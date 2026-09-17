@@ -35,13 +35,6 @@
         On dit que le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est un \textcolor{astral}{$\scrC^0$ semi-groupe}.
     \end{definition}
     \pause
-    \begin{theoreme}
-        Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe. Alors il existe $\omega \geq 0$ et $M \geq 1$ tels que 
-        \begin{equation*}
-            \forall t \in \bbR_+, \ \vertiii{T(t)} \leq M\ex^{\omega t}
-        \end{equation*}
-    \end{theoreme}
-    \pause
     \begin{definition}
         Soit $A$ un opérateur de $X$ dans $X$. 
         \begin{itemize}
@@ -51,24 +44,10 @@
     \end{definition}
 \end{frame}
 
-\begin{frame}
-    \begin{theorem}[Hille-Yosida]
-        Un opérateur $A$ est le générateur infinitésimal d'un $\scrC^0$ semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ satisfaisant pour tout $t \in \bbR_+$, $\vertiii{T(t)} \leq \ex^{\omega t}$ si et seulement si 
-        \begin{itemize}
-            \item[$(i)$] $A$ est fermé et $\overline{D(A)}=X$,
-            \item[$(ii)$] $\{\lambda \in \bbC \ | \ \Im(\lambda) = 0 \text{ et } \lambda > \omega \} \subset \rho(A)$ et on a pour $\lambda \in \{\lambda \in \bbC \ | \ \Im(\lambda) = 0 \text{ et } \lambda > \omega \}$
-            \begin{equation}\label{eq_H-Y}
-                \forall \lambda >0, \ \vertiii{R(\lambda:A)} \leq \frac{1}{\lambda-\omega}
-            \end{equation} 
-        \end{itemize}
-    \end{theorem}
-\end{frame}
-
 \subsection{Cadre théorique et problème de Cauchy}
 \begin{frame}
     \begin{itemize}
         \item On va \og regarder \fg{} notre inconnue $[0,a_{\max}] \times \bbR_+ \ni (a,t) \mapsto x(a,t) \in \bbR_+$ comme une fonction $\bbR_+ \ni t \mapsto \tilde{x}(t)$ à valeurs dans un espace vectoriel de fonctions définies sur $\bbR_+$, c'est-à-dire $[0,a_{\max}] \ni a \mapsto \tilde{x}(t)(a) \in \bbR_+$. \pause
-        \item On considère donc $x : \bbR_+ \rightarrow L^1(0,a_{\max}), \ t \mapsto x(t)$. Et on considère une donnée initiale $x_0 \in L^1(0,a_{\max})$. \pause
         \item On peut réécrire l'équation de McKendrick-Lotka et ainsi définir un opérateur $A$
         \begin{equation*}
             \frac{d}{d t}x(t) = \big(\underbrace{-\mu - \partial_a}_{=:A}\big) x(t)
@@ -113,7 +92,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Existence et unicité}
+\begin{frame}
     \begin{theorem}
         Le problème de Cauchy de McKendrick-Lotka admet une unique solution $x \in \scrC^0\big(\bbR_+, L^1(0,a_{\max})\big)$.
     \end{theorem}
@@ -134,42 +113,6 @@
                 \forall s \in \bbR_+, \ w(s) = T(t-s)v(s)
             \end{equation*}
         \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Existence et unicité}
-    \begin{itemize}
-        \item \textbf{Existence et unicité dans $L^1(0,a_{\max})$.}\pause
-        \begin{itemize}
-            \item[$\triangleright$] Soit maintenant $x_0 \in L^1(0,a_{\max})$. Par densité de $D(A)$ dans $L^1(0,a_{\max})$, il existe $(y_n)_{n \in \bbN} \subset D(A)$ telle que $y_n \overset{L^1}{\underset{n \to +\infty}{\longrightarrow}} x_0$. \pause
-            \item[$\triangleright$] On a le problème de Cauchy suivant pour tout $n \in \bbN$
-            \begin{equation*}
-                \left\{\begin{array}{l}
-                    \dfrac{d}{d t}x_n(t) = Ax_n(t) \ \ \ \ \ t>0 \\
-                    x_n(0)=y_n
-                \end{array}\right.
-            \end{equation*} \pause
-            \item[$\triangleright$] Par le raisonnement précédent, ce problème admet une unique solution pour tout $n \in \bbN$, cette solution est donnée par 
-            \begin{equation*}
-                \forall t \in \bbR_+, \ x_n(t) = T(t)y_n
-            \end{equation*}
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Existence et unicité}
-    \begin{itemize}
-        \item \textbf{Existence et unicité dans $L^1(0,a_{\max})$.}
-        \begin{itemize}
-            \item[$\triangleright$] La suite $\big(x_n(t)\big)_{n \in \bbN}$ est de Cauchy dans $L^1(0,a_{\max})$ qui est complet, donc elle converge vers un élément $x^*(t)$. \pause
-            \item[$\triangleright$] On montre que $x^*(t)=T(t)x_0$. \pause
-            \item[$\triangleright$] Pour l'unicité, on utilise une propriété des semi-groupes, si on a 
-            \begin{equation*}
-                \forall \lambda \geq \|\beta\|_{L^\infty}, \ \frac{\ln\|R(\lambda:A)\|}{\lambda} \leq 0
-            \end{equation*}
-            alors il existe au plus une solution. \pause
-        \end{itemize}
-        \item \textbf{Continuité de la solution.} On utilise une généralisation du théorème d'explosion en temps fini pour les semi-groupes.
     \end{itemize}
 \end{frame}
 
@@ -194,55 +137,17 @@
 \subsection{Comportement asymptotique}
 \begin{frame}
     \begin{definition}
-        On définit le \textcolor{astral}{type} de $\big\{T(t)\big\}_{t \geq 0}$ par 
-        \begin{equation*}
-            \omega_0 := \lim_{t \to +\infty}\frac{\ln(\vertiii{T(t)})}{t} = \inf_{t >0}\frac{\ln(\vertiii{T(t)})}{t}
-        \end{equation*}
-    \end{definition}
-    \pause
-    \begin{definition}
-        On définit le \textcolor{astral}{type essentiel} de $\big\{T(t)\big\}_{t \geq 0}$ par 
-        \begin{equation*}
-            \omega_{\text{ess}} := \lim_{t \to +\infty}\frac{\ln(|T(t)|_{\alpha})}{t} = \inf_{t >0}\frac{\ln(|T(t)|_\alpha)}{t}
-        \end{equation*}
-        où $|\cdot|_{\alpha}$ est la mesure de non-compacité.
-    \end{definition}
-    \pause
-    \begin{definition}
         On définit la \textcolor{astral}{borne spectrale de $A$} par 
         \begin{equation*}
             s(A):= \sup\{\Re (\lambda) \in \bbR \ \ | \ \ \lambda \in \sigma(A)\}
         \end{equation*}
         avec $s(A)=-\infty$ si le spectre de $A$ est vide.
     \end{definition}
-\end{frame}
-
-\begin{frame}
-    \begin{definition}
-        Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est \textcolor{astral}{positif} si pour tout $t \geq 0$ 
-        \begin{equation*}
-            T(t)X^+ \subset X^+
-        \end{equation*}
-        où $X^+$ désigne le cône positif de $X$.
-    \end{definition}
     \pause
     \begin{definition}
         On dit que le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est \textcolor{astral}{irréductible} si $\{0\}$ et $X$ sont les seuls idéaux fermés $\big\{T(t)\big\}_{t \geq 0}$ invariant.
     \end{definition}
     \pause
-    \begin{theorem}
-        Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe positif tel que $\omega_{\text{ess}} < \omega_0$. Alors 
-        \begin{itemize}
-            \item $\sigma_+(A)=\{s(A)\}$ et il existe $\varepsilon >0$ tel que 
-            \begin{eqnarray*}
-                \omega_{\text{ess}} \leq s(A)-\varepsilon \ \ \ &\text{ et }& \ \ \ \forall \lambda \in \sigma(A) \setminus \{s(A)\}, \ \Re(\lambda) \leq s(A)- \varepsilon
-            \end{eqnarray*}
-            \item De plus, si $\big\{T(t)\big\}_{t \geq 0}$ est irréductible alors $s(A)$ est un pôle d'ordre $1$ de $R(\lambda :A)$ de multiplicité géométrique $1$.
-        \end{itemize}
-    \end{theorem}
-\end{frame}
-
-\begin{frame}
     \begin{theorem}
         Soit $\big\{T(t)\big\}_{t \geq 0}$ un $\scrC^0$ semi-groupe positif tel que $\omega_{\text{ess}} < \omega_0$. Soit $\varepsilon >0$ donné par le théorème précédent. Si $\big\{T(t)\big\}_{t \geq 0}$ est irréductible et on a $x \in X^+$ et $x^* \in (X')^+$ tels que 
         \begin{equation*}
@@ -255,36 +160,26 @@
             \|\ex^{-s(A)t}T(t)x - \langle x,x_0^*\rangle x_0\| \leq M_\eta \ex^{-\eta t}\|x\|
         \end{equation*}
     \end{theorem}
-    \pause
-    Dans notre cas, on a 
+\end{frame}
+
+\begin{frame} 
     \begin{itemize}
         \item $\omega_{\text{ess}}=-\infty$ et $\omega_0 = s(A) = \alpha^*$ \pause
         \item $x(a) = x(0)\ex^{-\alpha^*a}\Pi(a)$ \pause
         \item $A^*v = -\mu v + v' + \beta v(0)$ \pause
         \item $x^*(a) = x^*(0)\dfrac{\ex^{\alpha^*a}}{\Pi(a)}\Big(1-\displaystyle{\int_0^a}\ex^{-\alpha^*s}K(s)d s\Big)$ \pause 
-        \item Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $x^*(0)$ satisfaisant l'équation.
+        \item Pour satisfaire la condition $\langle x,x^*\rangle =1$, on peut par exemple prendre $x(0)=1$ et déterminer $x^*(0)$ satisfaisant l'équation. \pause
     \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \begin{definition}
-        On considère l'ouvert $\omega \subset \ ]0,a_{\max}[$ constitué des points au voisinage desquels $\beta=0$ presque partout. On définit alors le \textcolor{astral}{support essentiel} de $\beta$ par 
-        \begin{equation*}
-            \mathrm{Supp}_{\text{ess}}(\beta)=\ ]0,a_{\max}[ \ \setminus \omega
-        \end{equation*}
-        et on pose 
-        \begin{equation*}
-            \overline{\beta} := \sup \mathrm{Supp}_{\text{ess}}(\beta)
-        \end{equation*}
-    \end{definition}
-    \pause
     \begin{proposition}
-        Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est irréductible si et seulement si $\overline{\beta}=a_{\max}$.
+        Le semi-groupe $\big\{T(t)\big\}_{t \geq 0}$ est irréductible si et seulement si 
+        \begin{equation*}
+            \sup \ ]0,a_{\max}[ \ \setminus \omega = a_{\max}
+        \end{equation*}
+        où $\omega \subset \ ]0,a_{\max}[$ est l'ouvert constitué des points au voisinage desquels $\beta=0$.
     \end{proposition}
     \pause
     Donc on a par le théorème
     \begin{equation*}
         \lim_{t \to +\infty} \big(T(t)x_0\big)(a) = \lim_{t \to +\infty} \ex^{\alpha^*(t-a)}\Pi(a)\langle x_0,x^*\rangle
     \end{equation*}
-    on retrouve bien les résultats obtenus dans la section de résolution par la méthode des caractéristiques.
 \end{frame}

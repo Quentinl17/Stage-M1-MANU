@@ -7,6 +7,7 @@ L'objectif avec ce stage était d'approfondir les notions d'Analyse Fonctionnell
 
 ## 📁 Contenu du dépôt
 * `rapport` : Le code Latex complet du rapport, avec notamment la version finale du rapport au format pdf.
+* `presentation` : Le code Latex complet du diaporama réalisé pour la présentation du projet, avec la version finale au format pdf.
 * `programmation` : Le code permettant le tracé des caractéristiques en Python.
 
 ## 👥 Équipe
