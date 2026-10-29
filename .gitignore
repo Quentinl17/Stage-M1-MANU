@@ -20,3 +20,11 @@
 *.bib
 *.sty
 references/
+
+# Fichiers temporaires C++
+*.sh
+*.o
+*.exe
+
+# Autres fichiers
+*.txt
