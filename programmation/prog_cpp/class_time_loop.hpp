@@ -1,7 +1,9 @@
 #pragma once
+#include <filesystem> 
 #include "class_mesh.hpp"
 #include "class_field.hpp"
 #include "class_residual.hpp"
+#include "class_output_writer.hpp"
 #include "functions_demography.hpp"
 
 template<typename T>
@@ -30,8 +32,8 @@ class time_loop
 
         std::vector<T> B_;
         std::vector<T> times_;
-        residual<T> residual_;
         mesh<T> const& mesh_;
+        residual<T> residual_;
 };
 
 // ===== Definitions ===== //
@@ -40,7 +42,7 @@ time_loop<T>::time_loop(mesh<T> const& msh, T final_time) : mesh_(msh), final_ti
 {
     for(size_t i = 0; i < msh.n_cells(); i++)
     {
-        max_mu_   = std::max(max_mu_, mu(msh.cells_centers(i)));
+        max_mu_ = std::max(max_mu_, mu(msh.cells_centers(i)));
     }
 
     dt_ = cfl_number_ * mesh_.da() / (1 + max_mu_ * mesh_.da());
@@ -62,7 +64,14 @@ T time_loop<T>::birth_rate(field<T> const& uh) const
 template<typename T>
 void time_loop<T>::run(field<T>& uh)
 {
-    while(std::abs(physical_time_ - final_time()) > 1e-6)
+    std::filesystem::remove_all("mckendrick_lotka_solution");
+    std::filesystem::create_directories("mckendrick_lotka_solution");
+    output_writer<T> out_stream(mesh_, "mckendrick_lotka_solution/solution");
+
+    int step = 0;
+    out_stream.write_solution(uh, std::to_string(step));
+    
+    while(std::abs(physical_time_ - final_time()) > 1e-12)
     {
         if(physical_time_ + dt_ > final_time())
         {
@@ -85,6 +94,12 @@ void time_loop<T>::run(field<T>& uh)
 
         uh += dt_ * (residual_ - source_term);
 
+        step += 1;
+        out_stream.write_solution(uh, std::to_string(step));
+
         physical_time_ += dt_;
     }
+
+    times_.push_back(physical_time_);
+    B_.push_back(birth_rate(uh));
 }

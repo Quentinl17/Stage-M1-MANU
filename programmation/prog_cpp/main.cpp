@@ -10,8 +10,8 @@ int main()
 {
     // MCKENDRICK-LOTKA MODEL SOLVING
     // Needed initialization parameters
-    size_t Ne = 1000;
-    size_t Nt = 2000;
+    size_t Ne = 30;
+    size_t Nt = 100;
     double final_time = 3.;
 
     // Mesh construction
@@ -23,10 +23,10 @@ int main()
     field<double> xh(msh);
 
     // Initialize writer
-    output_writer<double> out_stream(msh, "mckendrick_lotka_solution");
+    //output_writer<double> out_stream(msh, "mckendrick_lotka_solution/solution");
 
     // Write initial field
-    out_stream.write_solution(xh, "initial");
+    //out_stream.write_solution(xh, "initial");
 
     // Initialize time-loop
     time_loop<double> loop_in_time(msh, final_time);
@@ -35,7 +35,7 @@ int main()
     loop_in_time.run(xh);
 
     // Write final field
-    out_stream.write_solution(xh, "final");
+    //out_stream.write_solution(xh, "final");
 
     // RENEWAL EQUATION SOLVING
     // Initialize writer

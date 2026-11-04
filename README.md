@@ -8,7 +8,7 @@ L'objectif avec ce stage était d'approfondir les notions d'Analyse Fonctionnell
 ## 📁 Contenu du dépôt
 * `rapport` : Le code Latex complet du rapport, avec notamment la version finale du rapport au format pdf.
 * `presentation` : Le code Latex complet du diaporama réalisé pour la présentation du projet, avec la version finale au format pdf.
-* `programmation` : Le code permettant le tracé des caractéristiques en Python.
+* `programmation` : Le code permettant le tracé des caractéristiques en Python. Ajout d'un dossier `prog_cpp` contenant le code C++ d'un schéma volume fini permettant la résolution du modèle de McKendrick-Lotka linéaire avec l'affichage d'un GIF. On a également la solution de l'équation de renouvellement démographique qui est calculée de deux manières différentes, d'abord avec le schéma volume fini à l'aide de la condition au bord, puis avec des formules de quadrature de l'équation intégrale de Volterra.
 
 ## 👥 Équipe
 * **Quentin Lahaye**
