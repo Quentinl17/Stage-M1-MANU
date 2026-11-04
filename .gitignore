@@ -19,7 +19,11 @@
 *.vrb
 *.bib
 *.sty
+
+# Dossiers cachés
 references/
+programmation/prog_cpp/images
+programmation/prog_cpp/mckendrick_lotka_solution
 
 # Fichiers temporaires C++
 *.sh
@@ -28,3 +32,4 @@ references/
 
 # Autres fichiers
 *.txt
+.gif
