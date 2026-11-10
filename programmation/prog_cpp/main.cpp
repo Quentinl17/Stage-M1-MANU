@@ -22,20 +22,11 @@ int main()
     // Initial field defined and initialized on mesh
     field<double> xh(msh);
 
-    // Initialize writer
-    //output_writer<double> out_stream(msh, "mckendrick_lotka_solution/solution");
-
-    // Write initial field
-    //out_stream.write_solution(xh, "initial");
-
     // Initialize time-loop
     time_loop<double> loop_in_time(msh, final_time);
 
     // Lauch time-loop
     loop_in_time.run(xh);
-
-    // Write final field
-    //out_stream.write_solution(xh, "final");
 
     // RENEWAL EQUATION SOLVING
     // Initialize writer
